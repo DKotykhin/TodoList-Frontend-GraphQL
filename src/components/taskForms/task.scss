@@ -1,0 +1,11 @@
+.task {
+    &.title {
+        margin-top: 24px;
+        text-align: center;
+        font-size: 25px;
+    }
+    &.checkbox {
+        display: flex;
+        justify-content: flex-start;        
+    }   
+}
