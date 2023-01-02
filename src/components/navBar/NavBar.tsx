@@ -7,8 +7,6 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import NavBarMenu from "./NavBarMenu";
 
-// import { useQuery } from "@apollo/client";
-// import { GET_USER_BY_TOKEN } from "apollo/query/getUser";
 import { selectUser } from "store/selectors";
 import { useAppSelector } from "store/hook";
 
@@ -18,22 +16,9 @@ const Base_URL = process.env.REACT_APP_UPLOAD_URL;
 
 const NavBar: React.FC = () => {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-    const { avatarURL, name } = useAppSelector(selectUser);
-    // console.log('name:', name);
-    // console.log('avatarURL:', avatarURL);
-        
-    // const { data } = useQuery(GET_USER_BY_TOKEN, {
-    //     onCompleted: () => {
-    //         console.log('useQuery completed')
-    //     }
-    // });    
+    const { avatarURL, name: userName } = useAppSelector(selectUser);
 
-    // const userAvatarURL =
-    //     data?.getUserByToken.avatarURL ? Base_URL + data.getUserByToken.avatarURL : "/";
-    // const userName = data?.getUserByToken.name;
-    const userAvatarURL =
-        avatarURL ? Base_URL + avatarURL : "/";
-    const userName = name;
+    const userAvatarURL = avatarURL ? Base_URL + avatarURL : "/";
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -50,7 +35,7 @@ const NavBar: React.FC = () => {
                     <AssignmentTurnedInIcon sx={{ mr: 1 }} />
                     <Typography
                         component={RouterLink}
-                        to="/"
+                        to={userName ? "/" : "/login"}
                         className="navbar link_text"
                     >
                         TodoList

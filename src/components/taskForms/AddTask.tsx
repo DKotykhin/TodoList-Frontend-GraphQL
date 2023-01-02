@@ -11,7 +11,6 @@ import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskField
 import { AddTaskFormValidation } from "../taskFields/taskFormValidation";
 
 import { CREATE_TASK } from "apollo/mutation/mutateTask";
-import { GET_TASKS } from "apollo/query/getTasks";
 import { IAddTask } from "types/taskTypes";
 
 import "./task.scss";
@@ -22,8 +21,13 @@ const AddTaskComponent: React.FC = () => {
     const navigate = useNavigate();
 
     const [addTask, { loading }] = useMutation(CREATE_TASK, {
-        refetchQueries: [{ query: GET_TASKS }, 'getTasksQuery'],
-        awaitRefetchQueries: true,
+        update(cache) {
+            cache.modify({
+                fields: {
+                    getTasks() { }
+                }
+            })
+        },
         onCompleted: () => {
             navigate("/", { replace: true })
         },

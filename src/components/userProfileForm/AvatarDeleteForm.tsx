@@ -6,13 +6,19 @@ import SnackBar from 'components/snackBar/SnackBar';
 
 import { IUser } from 'types/userTypes';
 import { DELETE_AVATAR } from 'apollo/mutation/mutateUser';
-import { GET_USER_BY_TOKEN } from 'apollo/query/getUser';
 
 const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
 
     const [deleteError, setDeleteError] = useState('');
     const [deleteAvatar, { data, error }] = useMutation(DELETE_AVATAR, {
-        refetchQueries: [{ query: GET_USER_BY_TOKEN }, 'UserToken'],
+        // refetchQueries: [{ query: GET_USER_BY_TOKEN }, 'UserToken'],
+        update(cache) {
+            cache.modify({
+                fields: {
+                    getUserByToken() { }
+                }
+            })
+        },
     });
 
     const handleDelete = () => {

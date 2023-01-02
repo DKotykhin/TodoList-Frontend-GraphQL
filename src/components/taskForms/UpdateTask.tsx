@@ -40,7 +40,13 @@ const UpdateTaskComponent: React.FC = () => {
     });
 
     const [updateTask, { loading }] = useMutation(UPDATE_TASK, {
-        refetchQueries: [{ query: GET_TASKS }, 'getTasksQuery'],
+        update(cache) {
+            cache.modify({
+                fields: {
+                    getTasks() { }
+                }
+            })
+        },
         onCompleted: () => {
             navigate("/", { replace: true })
         },

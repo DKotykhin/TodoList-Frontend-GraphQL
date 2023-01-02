@@ -8,11 +8,11 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 import SnackBar from 'components/snackBar/SnackBar';
 import AvatarDeleteForm from './AvatarDeleteForm';
+
 import { UploadAvatar } from 'services/uploadAvatar';
+import { USER_UPLOAD_AVATAR_URL } from 'apollo/mutation/mutateUser';
 
 import { IUser } from 'types/userTypes';
-import { USER_UPLOAD_AVATAR_URL } from 'apollo/mutation/mutateUser';
-import { GET_USER_BY_TOKEN } from 'apollo/query/getUser';
 
 const checkFileType = (type: string): boolean => {
     return (type === 'image/jpeg' || type === 'image/png' || type === 'image/webp');
@@ -30,7 +30,14 @@ const AvatarUploadForm: React.FC<{ user?: IUser }> = ({ user }) => {
     const userAvatarURL = user?.avatarURL ? Base_URL + user.avatarURL : "/";
 
     const [loadAvatarURL, { error }] = useMutation(USER_UPLOAD_AVATAR_URL, {
-        refetchQueries: [{ query: GET_USER_BY_TOKEN }, 'UserToken'],
+        // refetchQueries: [{ query: GET_USER_BY_TOKEN }, 'UserToken'],
+        update(cache) {
+            cache.modify({
+                fields: {
+                    getUserByToken() { }
+                }
+            })
+        },
         onCompleted: (data) => {
             console.log(data.uploadAvatar.message)
         },

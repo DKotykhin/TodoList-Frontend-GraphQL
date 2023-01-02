@@ -5,6 +5,7 @@ import {
     NormalizedCacheObject,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+
 import { getToken } from "services/getToken";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;

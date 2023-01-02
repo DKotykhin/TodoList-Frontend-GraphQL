@@ -7,16 +7,16 @@ import { Typography, Paper } from "@mui/material";
 
 import DeleteDialog from "./DeleteDialog";
 import SnackBar from "components/snackBar/SnackBar";
-// import { fetchUser } from "services/userServices";
-// import { useAppDispatch } from "store/hook";
-// import { logout } from "store/userSlice";
+
+import { useAppDispatch } from "store/hook";
+import { logout } from "store/userSlice";
 import { DELETE_USER } from "apollo/mutation/mutateUser";
 
 
 const DeleteForm: React.FC<{ id: string }> = ({ id }) => {
 
     const [deleteError, setDeleteError] = useState('');
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [deleteUser, { loading }] = useMutation(DELETE_USER, {
@@ -24,8 +24,7 @@ const DeleteForm: React.FC<{ id: string }> = ({ id }) => {
             const { message } = data.userDelete;
             console.log(message);
             client.clearStore();
-            // dispatch(fetchUser.util.resetApiState());
-            // dispatch(logout());
+            dispatch(logout());
             sessionStorage.removeItem("rememberMe");
             localStorage.removeItem("rememberMe");
             navigate("/login");

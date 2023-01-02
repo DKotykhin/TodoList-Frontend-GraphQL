@@ -15,11 +15,7 @@ export const GET_USER_BY_TOKEN: DocumentNode = gql`
 
 export const USER_LOGIN: DocumentNode = gql`
     query ($query: UserLoginInput) {
-        userLogin(loginInput: $query) {
-            _id
-            name
-            avatarURL
-            createdAt
+        userLogin(loginInput: $query) {            
             token
             message
         }

@@ -7,12 +7,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import FieldSort from 'components/cardSort/FieldSort';
 import AZSort from 'components/cardSort/AZSort';
 import SearchTask from 'components/searchTask/SearchTask';
-
-import PropTypes from "prop-types";
 import CardList from 'components/cardList/CardList';
 
-import './tabPanel.scss'
+import PropTypes from "prop-types";
 import { useAppSelector } from 'store/hook';
+
+import './tabPanel.scss'
 
 interface TabPanelProps {
     children?: React.ReactNode;
