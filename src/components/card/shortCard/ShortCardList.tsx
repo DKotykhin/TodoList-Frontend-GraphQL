@@ -13,6 +13,7 @@ interface IShortCardList {
 };
 
 const ShortCardList: React.FC<IShortCardList> = ({ taskdata, handleOpenFullCard }) => {
+   
     return (
         <Grid container sx={{ mb: 4 }} className="shortCard">
             {taskdata.map((task) => (

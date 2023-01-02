@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
+import { useLazyQuery } from '@apollo/client';
 
 import { Button, Container, Typography, Box, Avatar, Paper } from "@mui/material";
 import { InputLabel, Checkbox } from "@mui/material";
@@ -9,8 +10,8 @@ import { EmailField, PasswordField } from "components/userFields";
 import SnackBar from "components/snackBar/SnackBar";
 import { LoginFormValidation } from "./userFormValidation";
 
-import { IUserLogin, RequestError } from "types/userTypes";
-import { useFetchLoginUserMutation } from "services/userServices";
+import { USER_LOGIN } from "apollo/query/getUser";
+import { IUserLogin } from "types/userTypes";
 
 import "./styleForm.scss";
 
@@ -20,9 +21,24 @@ interface IUserData extends IUserLogin {
 
 const LoginForm: React.FC = () => {
 
+    const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
-    const [fetchLogin, { error, isLoading }] = useFetchLoginUserMutation();
-    const loginError = (error as RequestError)?.data.message;
+    
+    const [fetchLogin, { loading, error }] = useLazyQuery(USER_LOGIN, {
+        onCompleted: (data) => {
+            const { token, message } = data.userLogin;
+            console.log(message);
+            if (rememberMe) {
+                localStorage.setItem("rememberMe", token);
+            }
+            sessionStorage.setItem("rememberMe", token);
+            navigate("/");
+            reset();
+        },
+        onError: (err) => {
+            console.log(err.message);
+        }
+    });
 
     const {
         control,
@@ -31,21 +47,13 @@ const LoginForm: React.FC = () => {
         reset,
     } = useForm<IUserData>(LoginFormValidation);
 
-
-    const onSubmit = async (formdata: IUserData): Promise<void> => {
-        const { email, password } = formdata;
-        await fetchLogin({ email, password })
-            .unwrap()
-            .then(response => {
-                console.log(response.message);
-                const { token } = response;
-                if (formdata.rememberMe) {
-                    localStorage.setItem("rememberMe", token);
-                }
-                sessionStorage.setItem("rememberMe", token);
-                navigate("/");
-                reset();
-            })
+    const onSubmit = (formdata: IUserData): void => {
+        const { email, password, rememberMe } = formdata;
+        setRememberMe(rememberMe);
+        const login = {
+            query: { email, password }
+        }
+        fetchLogin({ variables: login });
     };
 
     return (
@@ -83,10 +91,10 @@ const LoginForm: React.FC = () => {
                         disabled={!isValid}
                         type="submit"
                     >
-                        {isLoading ? 'Loading...' : 'Login'}
+                        {loading ? 'Loading...' : 'Login'}
                     </Button>
                 </Box>
-                <SnackBar successMessage="" errorMessage={loginError} />
+                <SnackBar successMessage="" errorMessage={error?.message || ""} />
             </Paper>
             <Typography className="form subtitle">
                 {"Don't have account?"}

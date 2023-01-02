@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { format } from "date-fns";
 
@@ -10,8 +11,9 @@ import { Box } from "@mui/system";
 import { UpdateTaskFormValidation } from "../taskFields/taskFormValidation";
 import SubmitCancelButtons from "./SubmitCancelButtons";
 import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskFields";
-import { useFetchUpdateTaskMutation, useFetchAllTasksQuery } from "services/taskServices";
 
+import { UPDATE_TASK } from 'apollo/mutation/mutateTask';
+import { GET_TASKS } from "apollo/query/getTasks";
 import { useAppSelector } from 'store/hook';
 import { ITask, IUpdateTask } from "types/taskTypes";
 
@@ -31,9 +33,22 @@ const UpdateTaskComponent: React.FC = () => {
     const navigate = useNavigate();
 
     const { query } = useAppSelector((state) => state.query);
+    const { query: { limit } } = useAppSelector((state) => state.query);
 
-    const { data } = useFetchAllTasksQuery(query);
-    const [updateTask, { isLoading }] = useFetchUpdateTaskMutation();
+    const { data } = useQuery(GET_TASKS, {
+        variables: { query: { ...query, limit: parseInt(limit) } }
+    });
+
+    const [updateTask, { loading }] = useMutation(UPDATE_TASK, {
+        refetchQueries: [{ query: GET_TASKS }, 'getTasksQuery'],
+        onCompleted: () => {
+            navigate("/", { replace: true })
+        },
+        onError: (err) => {
+            console.log(err.message);
+            alert(err.message);
+        }
+    });
 
     const {
         handleSubmit,
@@ -41,14 +56,14 @@ const UpdateTaskComponent: React.FC = () => {
         formState: { errors }
     } = useForm<IUpdateForm>(UpdateTaskFormValidation);
 
-    const currentTask = data?.tasks ? data.tasks.filter((task: ITask) => task._id === params.taskId) : [];
+    const currentTask = data?.getTasks.tasks ? data.getTasks.tasks.filter((task: ITask) => task._id === params.taskId) : [];
 
     const { title, subtitle, description, deadline, _id, completed } =
         currentTask[0];
 
     const parseDeadline = deadline ? format(new Date(deadline), "yyyy-LL-dd HH:mm") : '';
 
-    const onSubmit = async (data: IUpdateForm) => {
+    const onSubmit = (data: IUpdateForm) => {
         const { title, subtitle, deadline, completed } = data;
         const newDeadline = deadline ? new Date(deadline).toJSON() : '';
         const totalData: IUpdateTask = {
@@ -59,13 +74,7 @@ const UpdateTaskComponent: React.FC = () => {
             description: mdeValue,
             deadline: newDeadline,
         };
-        await updateTask(totalData)
-            .unwrap()
-            .then(() => navigate("/", { replace: true }))
-            .catch((error: { data: { message: string } }) => {
-                console.log(error.data.message);
-                alert(error.data.message);
-            })
+        updateTask({ variables: { query: totalData } })
     };
 
     const MDEChange = useCallback((data: string) => {
@@ -89,7 +98,7 @@ const UpdateTaskComponent: React.FC = () => {
                     />
                     <InputLabel sx={{ mt: 1 }}>Completed</InputLabel>
                 </Box>
-                <SubmitCancelButtons loading={isLoading} />
+                <SubmitCancelButtons loading={loading} />
             </Box>
         </Container>
     );

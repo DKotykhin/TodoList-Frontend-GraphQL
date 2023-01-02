@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from '@apollo/client';
 
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
@@ -7,7 +8,8 @@ import { Box } from "@mui/system";
 import { PasswordField } from "components/userFields";
 import SnackBar from "components/snackBar/SnackBar";
 import { PasswordFormValidation } from "../userFormValidation";
-import { useFetchUserConfirmPasswordMutation } from "services/userServices";
+
+import { USER_CONFIRM_PASSWORD } from "apollo/mutation/mutatePassword";
 
 import "../styleForm.scss";
 
@@ -23,7 +25,21 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
 
     const [error, setError] = useState('');
 
-    const [confirmPassword, { isLoading }] = useFetchUserConfirmPasswordMutation()
+    const [confirmPassword, { loading }] = useMutation(USER_CONFIRM_PASSWORD, {
+        onCompleted: (data) => {
+            const { status, message } = data.userConfirmPassword;
+            console.log(message);
+            if (status) {
+                confirmStatus(status)
+            } else {
+                setError(message);
+            }
+        },
+        onError: (err) => {
+            console.log(err.message);
+            setError(err.message);
+        }
+    });
 
     const {
         control,
@@ -31,24 +47,14 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
         formState: { errors, isValid },
     } = useForm<IPasswordData>(PasswordFormValidation);
 
-    const onSubmit = async (data: IPasswordData) => {
+    const onSubmit = (data: IPasswordData) => {
         setError('');
         const { currentpassword } = data;
-        await confirmPassword({ password: currentpassword })
-            .unwrap()
-            .then(response => {
-                console.log(response.message);
-                if (response.status) {
-                    confirmStatus(response.status)
-                } else {
-                    setError(response.message);
-                }
-            })
-            .catch((error: { data: { message: string }}) => {
-                console.log(error.data.message);
-                setError(error.data.message);
-            })
-    }
+        const confirm = {
+            query: { password: currentpassword }
+        };
+        confirmPassword({ variables: confirm });
+    };
 
     return (
         <>
@@ -69,7 +75,7 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
                     className="form submit_button"
                     type="submit"
                 >
-                    {isLoading ? 'Loading...' : "Confirm password"}
+                    {loading ? 'Loading...' : "Confirm password"}
                 </Button>
             </Box>
             <SnackBar successMessage="" errorMessage={error} />

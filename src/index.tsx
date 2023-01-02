@@ -1,8 +1,10 @@
 import ReactDOM from 'react-dom/client';
 import { Provider } from "react-redux";
+import { ApolloProvider } from '@apollo/client';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
+import client from 'apollo/client';
 import store from "./store/store";
 import App from './App';
 
@@ -13,7 +15,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <CssBaseline />
-    <App />
+    <ApolloProvider client={client}>
+      <CssBaseline />
+      <App />
+    </ApolloProvider>
   </Provider>
 );

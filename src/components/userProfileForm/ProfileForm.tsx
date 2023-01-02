@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from '@apollo/client';
 
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
@@ -7,17 +8,21 @@ import { Box } from "@mui/system";
 import { ProfileFormValidation } from "./ProfileFormValidation";
 import AvatarUploadForm from "./AvatarUploadForm";
 import { EmailField, NameField } from "components/userFields";
-
-import { useFetchUpdateUserMutation } from "services/userServices";
-import { IUser, IUserUpdate } from "types/userTypes";
 import SnackBar from "components/snackBar/SnackBar";
 
+import { USER_UPDATE_NAME } from "apollo/mutation/mutateUser";
+import { IUser, IUserUpdate } from "types/userTypes";
 
 const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
     const [updateError, setUpdateError] = useState('');
 
-    const [updateUser, { data: updateData, isLoading }] = useFetchUpdateUserMutation();
-    // const updateError = (error as RequestError)?.data.message;
+    const [updateUser, { data, loading }] = useMutation(USER_UPDATE_NAME, {
+        onError: (err) => {
+            console.log(err.message);
+            setUpdateError(err.message);
+        }
+    });
+
     const {
         control,
         reset,
@@ -29,16 +34,14 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
         reset({ name: user?.name, email: user?.email });
     }, [reset, user?.name, user?.email]);
 
-    const onSubmit = async (updateData: IUserUpdate) => {
+    const onSubmit = (updateData: IUserUpdate) => {
+        setUpdateError('');
         const { name } = updateData;
         if (name !== user?.name) {
-            await updateUser({ name })
-                .unwrap()
-                .catch((error) => {
-                    console.log(error.data.message);
-                    setUpdateError(error.data.message);
-                })
-
+            const update = {
+                query: { name }
+            };
+            updateUser({ variables: update });
         } else setUpdateError('The same name!');
     };
 
@@ -68,9 +71,9 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
                     variant="outlined"
                     sx={{ m: 3 }}
                 >
-                    {isLoading ? 'Loading...' : 'Save name'}
+                    {loading ? 'Loading...' : 'Save name'}
                 </Button>
-                <SnackBar successMessage={updateData?.message || ''} errorMessage={updateError} />
+                <SnackBar successMessage={data?.userUpdateName.message || ''} errorMessage={updateError} />
             </Box>
         </Paper>
     )

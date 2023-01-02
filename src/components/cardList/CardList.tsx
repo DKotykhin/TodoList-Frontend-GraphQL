@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Navigate } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 
 import { Box, Container, Typography, Modal } from "@mui/material";
 
@@ -10,10 +11,10 @@ import FullCard from 'components/card/fullCard/FullCard';
 import Spinner from 'components/spinner/Spinner';
 import SnackBar from 'components/snackBar/SnackBar';
 
-import { useFetchAllTasksQuery } from "services/taskServices";
-
 import { setQuery } from "store/querySlice";
 import { useAppDispatch, useAppSelector } from "store/hook";
+import { GET_TASKS } from 'apollo/query/getTasks';
+import { ITask } from 'types/taskTypes';
 
 import "./cardList.scss";
 
@@ -53,15 +54,12 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
         [currentPageNumber, searchQuery, sortParams.sortField, sortParams.sortOrder, tabIndex, totalTasks]
     );
 
-    const { data, isSuccess, isError, isFetching } = useFetchAllTasksQuery(query);
-    const taskdata = data?.tasks ? data.tasks : [];
-    const fullCard = taskdata.filter((task) => task._id === cardFullId)[0];
+    const { data, loading, error } = useQuery(GET_TASKS, {
+        variables: { query: { ...query, limit: parseInt(totalTasks) } }
+    });
 
-    useEffect(() => {
-        if (data?.tasksOnPageQty === 0) {
-            setCurrentPageNumber(prev => prev - 1);
-        }
-    }, [data?.tasksOnPageQty]);
+    const taskdata = data?.getTasks.tasks ? data.getTasks.tasks : [];
+    const fullCard = taskdata.filter((task: ITask) => task._id === cardFullId)[0];
 
     useEffect(() => {
         setCurrentPageNumber(1);
@@ -109,9 +107,7 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
         setErrorMessageHook(data);
     };
 
-    if (isFetching) return <Spinner />;
-
-    return isSuccess ? (
+    return !loading ? (
         <Container className="cardList" maxWidth="xl">
             <Box className="cardList cardListBox">
                 <Modal open={cardFullOpen} onClose={cardFullClose}>
@@ -136,16 +132,16 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
                 <SelectTaskCount totalTasks={totalTasks} setTotalTasks={handleTotalTasks} />
             </Box>
             <Box>
-                {data?.totalPagesQty > 1 &&
+                {data?.getTasks.totalPagesQty > 1 &&
                     <PaginationControlled
-                        totalPagesQty={data?.totalPagesQty}
+                        totalPagesQty={data?.getTasks.totalPagesQty}
                         currentPage={handleCurrentPageNumber}
                         currentPageNumber={currentPageNumber} />
                 }
             </Box>
             <SnackBar successMessage={succsessMessageHook} errorMessage={errorMessageHook} />
         </Container>
-    ) : isError ? <Navigate to='/login' /> : <Spinner />
+    ) : !!error ? <Navigate to={'/login'} /> : <Spinner />
 }
 
 export default CardList;

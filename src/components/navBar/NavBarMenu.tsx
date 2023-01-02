@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
+// import client from "apollo/client";
+import { useApolloClient } from "@apollo/client";
 
-import { fetchUser } from "services/userServices";
 import { useAppDispatch } from "store/hook";
 import { logout } from "store/userSlice";
 
@@ -11,6 +12,7 @@ const settings = ["Profile", "Change password", "Logout"];
 const NavBarMenu = () => {    
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const client = useApolloClient();
 
     const handleSettingMenu = (event: string): void => {
         switch (event) {
@@ -20,9 +22,10 @@ const NavBarMenu = () => {
             case "Change password":
                 navigate("/password");
                 break;
-            case "Logout":
-                dispatch(fetchUser.util.resetApiState());
+            case "Logout":                
                 dispatch(logout());
+                client.clearStore();
+                client.cache.reset();                
                 sessionStorage.removeItem("rememberMe");
                 localStorage.removeItem("rememberMe");
                 navigate("/login");

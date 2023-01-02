@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
 
 import DeleteDialog from "../userDeleteForm/DeleteDialog";
 import SnackBar from 'components/snackBar/SnackBar';
 
-import { useFetchDeleteAvatarMutation } from "services/userServices";
-import { IUser, RequestError } from 'types/userTypes';
+import { IUser } from 'types/userTypes';
+import { DELETE_AVATAR } from 'apollo/mutation/mutateUser';
+import { GET_USER_BY_TOKEN } from 'apollo/query/getUser';
 
 const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
 
     const [deleteError, setDeleteError] = useState('');
-    const [deleteAvatar, { data, error }] = useFetchDeleteAvatarMutation();
-    const responseError = (error as RequestError)?.data.message;
+    const [deleteAvatar, { data, error }] = useMutation(DELETE_AVATAR, {
+        refetchQueries: [{ query: GET_USER_BY_TOKEN }, 'UserToken'],
+    });
 
-    const handleDelete = async () => {
+    const handleDelete = () => {
         setDeleteError('');
         const avatarURL: string | undefined = user?.avatarURL;
         if (avatarURL) {
-            await deleteAvatar();
+            deleteAvatar({ variables: { query: { _id: user?._id } } });
         } else {
             console.log("Avatar doesn't exist");
             setDeleteError("Avatar doesn't exist");
         }
-    }
+    };
 
     return (
         <>
@@ -29,7 +32,7 @@ const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 dialogTitle={"You really want to delete avatar?"}
                 deleteAction={handleDelete}
             />
-            <SnackBar successMessage={data?.message || ''} errorMessage={deleteError || responseError} />
+            <SnackBar successMessage={data?.deleteAvatar.message || ''} errorMessage={deleteError || error?.message || ""} />
         </>
     )
 }

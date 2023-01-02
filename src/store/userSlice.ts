@@ -15,11 +15,14 @@ const UserSlice = createSlice({
     initialState,
     reducers: {
         logout: () => initialState,
-        setUserAvatar: (state, action: PayloadAction<IUser>) => {
+        setUser: (state, action: PayloadAction<IUser>) => {
             state.name = action.payload.name;
             state.avatarURL = action.payload.avatarURL;
         },
-        updateAvatar: (state, action: PayloadAction<IUserAvatarResponse>) => {            
+        updateAvatarURL: (
+            state,
+            action: PayloadAction<IUserAvatarResponse>
+        ) => {
             state.avatarURL = action.payload.avatarURL;
         },
     },
@@ -28,4 +31,4 @@ const UserSlice = createSlice({
 const { actions, reducer } = UserSlice;
 
 export default reducer;
-export const { setUserAvatar, updateAvatar, logout } = actions;
+export const { setUser, updateAvatarURL, logout } = actions;

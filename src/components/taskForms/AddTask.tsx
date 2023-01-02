@@ -1,25 +1,37 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
 
 import { Box } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 
+import SubmitCancelButtons from "./SubmitCancelButtons";
 import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskFields";
 import { AddTaskFormValidation } from "../taskFields/taskFormValidation";
-import { useFetchAddTaskMutation } from "services/taskServices";
 
+import { CREATE_TASK } from "apollo/mutation/mutateTask";
+import { GET_TASKS } from "apollo/query/getTasks";
 import { IAddTask } from "types/taskTypes";
 
 import "./task.scss";
-import SubmitCancelButtons from "./SubmitCancelButtons";
 
 const AddTaskComponent: React.FC = () => {
-   
+
     const [mdeValue, setMdeValue] = useState("");
     const navigate = useNavigate();
 
-    const [addTask, { isLoading }] = useFetchAddTaskMutation();
+    const [addTask, { loading }] = useMutation(CREATE_TASK, {
+        refetchQueries: [{ query: GET_TASKS }, 'getTasksQuery'],
+        awaitRefetchQueries: true,
+        onCompleted: () => {
+            navigate("/", { replace: true })
+        },
+        onError: (err) => {
+            console.log(err.message);
+            alert(err.message);
+        }
+    });
 
     const {
         handleSubmit,
@@ -27,8 +39,8 @@ const AddTaskComponent: React.FC = () => {
         formState: { errors },
     } = useForm<IAddTask>(AddTaskFormValidation);
 
-    const onSubmit = async (data: IAddTask) => {
-        const { title, subtitle, deadline } = data;      
+    const onSubmit = (data: IAddTask) => {
+        const { title, subtitle, deadline } = data;
         const newDeadline: string = deadline ? new Date(deadline).toJSON() : ''
         const newData: IAddTask = {
             title,
@@ -37,13 +49,7 @@ const AddTaskComponent: React.FC = () => {
             deadline: newDeadline,
             completed: false
         };
-        await addTask(newData)
-            .unwrap()
-            .then(() => navigate("/", { replace: true }))
-            .catch((error: { data: { message: string }}) => {
-                console.log(error.data.message);
-                alert(error.data.message);
-            })
+        addTask({ variables: { query: newData } });
     };
 
     const MDEChange = useCallback((data: string) => {
@@ -60,7 +66,7 @@ const AddTaskComponent: React.FC = () => {
                 <MDEField MDEChange={MDEChange} />
                 <DeadlineField register={register} value={''} />
 
-                <SubmitCancelButtons loading={isLoading} />
+                <SubmitCancelButtons loading={loading} />
             </Box>
         </Container>
     );
