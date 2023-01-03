@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUserAvatarResponse } from "types/responseTypes";
-import { IUser } from "types/userTypes";
+import { IAvatarResponse, IUser } from "types/userTypes";
 
 const initialState: IUser = {
     _id: "",
@@ -8,6 +7,7 @@ const initialState: IUser = {
     name: "",
     createdAt: "",
     avatarURL: "",
+    message: ""
 };
 
 const UserSlice = createSlice({
@@ -21,7 +21,7 @@ const UserSlice = createSlice({
         },
         updateAvatarURL: (
             state,
-            action: PayloadAction<IUserAvatarResponse>
+            action: PayloadAction<IAvatarResponse>
         ) => {
             state.avatarURL = action.payload.avatarURL;
         },

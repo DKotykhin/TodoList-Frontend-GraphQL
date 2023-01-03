@@ -12,11 +12,7 @@ export const USER_CONFIRM_PASSWORD: DocumentNode = gql`
 export const USER_UPDATE_PASSWORD: DocumentNode = gql`
     mutation ($password: String!) {
         userUpdatePassword(password: $password) {
-            _id
-            name
-            email
-            avatarURL
-            createdAt
+            status
             message
         }
     }

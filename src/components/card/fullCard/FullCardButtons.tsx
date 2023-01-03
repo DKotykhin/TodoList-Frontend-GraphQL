@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { Button } from "@mui/material";
 
 import { DELETE_TASK, UPDATE_TASK } from 'apollo/mutation/mutateTask';
-import { ICompleteTask, ITask } from "types/taskTypes";
+import { ICompleteTask, ITask, ITaskDeleteResponse, ITaskUpdateResponse, IUpdateTask } from "types/taskTypes";
 
 interface IFullCardButtons {
     task: ITask;
@@ -13,11 +13,18 @@ interface IFullCardButtons {
     errorMessage: (arg0: string) => void;
     closeModal: () => void;
 }
+interface IUpdateResponse {
+    updateTask: ITaskUpdateResponse;
+}
+
+interface IDeleteResponse {
+    deleteTask: ITaskDeleteResponse;
+}
 
 const FullCardButtons: React.FC<IFullCardButtons> = ({ task, successMessage, errorMessage, closeModal }) => {
     const { _id, completed } = task;
 
-    const [updateTask, { loading }] = useMutation(UPDATE_TASK, {
+    const [updateTask, { loading }] = useMutation<IUpdateResponse, { query: IUpdateTask }>(UPDATE_TASK, {
         update(cache) {
             cache.modify({
                 fields: {
@@ -33,7 +40,7 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, successMessage, err
         }
     });
 
-    const [deleteTask] = useMutation(DELETE_TASK, {
+    const [deleteTask] = useMutation<IDeleteResponse, { _id: string }>(DELETE_TASK, {
         update(cache) {
             cache.modify({
                 fields: {

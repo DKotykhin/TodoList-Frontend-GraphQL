@@ -9,8 +9,7 @@ export const CREATE_TASK: DocumentNode = gql`
             description
             completed
             deadline
-            createdAt
-            updatedAt
+            createdAt            
             message
         }
     }

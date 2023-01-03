@@ -4,14 +4,17 @@ import { useMutation } from '@apollo/client';
 import DeleteDialog from "../userDeleteForm/DeleteDialog";
 import SnackBar from 'components/snackBar/SnackBar';
 
-import { IUser } from 'types/userTypes';
+import { IAvatarResponse, IUser } from 'types/userTypes';
 import { DELETE_AVATAR } from 'apollo/mutation/mutateUser';
+
+interface IResponse {
+    deleteAvatar: IAvatarResponse;
+}
 
 const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
 
     const [deleteError, setDeleteError] = useState('');
-    const [deleteAvatar, { data, error }] = useMutation(DELETE_AVATAR, {
-        // refetchQueries: [{ query: GET_USER_BY_TOKEN }, 'UserToken'],
+    const [deleteAvatar, { data, error }] = useMutation<IResponse, { _id: string | undefined }>(DELETE_AVATAR, {
         update(cache) {
             cache.modify({
                 fields: {

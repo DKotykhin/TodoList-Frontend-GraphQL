@@ -11,16 +11,20 @@ import SnackBar from "components/snackBar/SnackBar";
 import { RegisterFormValidation } from "./userFormValidation";
 
 import { USER_REGISTER } from "apollo/mutation/mutateUser";
-import { IUserRegister } from "types/userTypes";
+import { ITokenResponse, IUserRegister } from "types/userTypes";
 
 import "./styleForm.scss";
 
+interface IResponse {
+    userRegister: ITokenResponse
+}
+
 const RegisterForm = () => {
-    
+
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const [registerUser, { loading }] = useMutation(USER_REGISTER, {
+    const [registerUser, { loading }] = useMutation<IResponse, { query: IUserRegister }>(USER_REGISTER, {
         onCompleted: (data) => {
             const { token, message } = data.userRegister;
             console.log(message);

@@ -10,6 +10,7 @@ import SnackBar from "components/snackBar/SnackBar";
 import { NewPasswordFormValidation } from "../userFormValidation";
 
 import { USER_UPDATE_PASSWORD } from "apollo/mutation/mutatePassword";
+import { IPasswordResponse, IUserUpdate } from "types/userTypes";
 
 import "../styleForm.scss";
 
@@ -17,18 +18,25 @@ interface IPasswordData {
     newpassword: string;
     confirmpassword: string
 }
+interface IResponse {
+    userUpdatePassword: IPasswordResponse;
+}
 
 const ChangePassword: React.FC = () => {
 
     const [loaded, setLoaded] = useState('');
     const [error, setError] = useState('');
 
-    const [updatePassword, { loading }] = useMutation(USER_UPDATE_PASSWORD, {
+    const [updatePassword, { loading }] = useMutation<IResponse, IUserUpdate>(USER_UPDATE_PASSWORD, {
         onCompleted: (data) => {
-            const { message } = data.userUpdatePassword;
+            const { message, status } = data.userUpdatePassword;
             console.log(message);
-            setLoaded('Password successfully changed!');
-            reset();
+            if (status) {
+                setLoaded('Password successfully changed!');
+                reset();
+            } else {
+                setError(message);
+            }
         },
         onError: (err) => {
             console.log(err.message);
@@ -47,7 +55,7 @@ const ChangePassword: React.FC = () => {
         setError('');
         setLoaded('');
         if (data.newpassword === data.confirmpassword) {
-            const { newpassword } = data;            
+            const { newpassword } = data;
             updatePassword({ variables: { password: newpassword } });
         } else {
             console.log("Passwords don't match");

@@ -15,7 +15,7 @@ import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskField
 import { UPDATE_TASK } from 'apollo/mutation/mutateTask';
 import { GET_TASKS } from "apollo/query/getTasks";
 import { useAppSelector } from 'store/hook';
-import { ITask, IUpdateTask } from "types/taskTypes";
+import { ITask, ITaskResponse, ITaskUpdateResponse, IUpdateTask } from "types/taskTypes";
 
 import "./task.scss";
 
@@ -24,6 +24,13 @@ interface IUpdateForm {
     subtitle?: string;
     deadline?: string;
     completed: boolean;
+}
+
+interface IQueryResponse {
+    getTasks: ITaskResponse;
+}
+interface IMutationResponse {
+    updateTask: ITaskUpdateResponse;
 }
 
 const UpdateTaskComponent: React.FC = () => {
@@ -35,11 +42,11 @@ const UpdateTaskComponent: React.FC = () => {
     const { query } = useAppSelector((state) => state.query);
     const { query: { limit } } = useAppSelector((state) => state.query);
 
-    const { data } = useQuery(GET_TASKS, {
+    const { data } = useQuery<IQueryResponse>(GET_TASKS, {
         variables: { query: { ...query, limit: parseInt(limit) } }
     });
 
-    const [updateTask, { loading }] = useMutation(UPDATE_TASK, {
+    const [updateTask, { loading }] = useMutation<IMutationResponse, { query: IUpdateTask }>(UPDATE_TASK, {
         update(cache) {
             cache.modify({
                 fields: {

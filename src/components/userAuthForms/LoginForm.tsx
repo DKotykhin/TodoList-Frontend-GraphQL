@@ -11,20 +11,23 @@ import SnackBar from "components/snackBar/SnackBar";
 import { LoginFormValidation } from "./userFormValidation";
 
 import { USER_LOGIN } from "apollo/query/getUser";
-import { IUserLogin } from "types/userTypes";
+import { ITokenResponse, IUserLogin } from "types/userTypes";
 
 import "./styleForm.scss";
 
 interface IUserData extends IUserLogin {
     rememberMe: boolean
 }
+interface IResponse {
+    userLogin: ITokenResponse
+}
 
 const LoginForm: React.FC = () => {
 
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
-    
-    const [fetchLogin, { loading, error }] = useLazyQuery(USER_LOGIN, {
+
+    const [fetchLogin, { loading, error }] = useLazyQuery<IResponse, IUserLogin>(USER_LOGIN, {
         onCompleted: (data) => {
             const { token, message } = data.userLogin;
             console.log(message);
@@ -49,7 +52,7 @@ const LoginForm: React.FC = () => {
 
     const onSubmit = (formdata: IUserData): void => {
         const { email, password, rememberMe } = formdata;
-        setRememberMe(rememberMe);        
+        setRememberMe(rememberMe);
         fetchLogin({ variables: { email, password } });
     };
 

@@ -14,7 +14,7 @@ import SnackBar from 'components/snackBar/SnackBar';
 import { setQuery } from "store/querySlice";
 import { useAppDispatch, useAppSelector } from "store/hook";
 import { GET_TASKS } from 'apollo/query/getTasks';
-import { ITask } from 'types/taskTypes';
+import { ITask, ITaskResponse } from 'types/taskTypes';
 
 import "./cardList.scss";
 
@@ -23,6 +23,10 @@ interface ICardListNew {
     searchQuery: string;
     fieldData: string;
     AZData: string;
+}
+
+interface IQueryResponse {
+    getTasks: ITaskResponse;
 }
 
 const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZData }) => {
@@ -54,7 +58,7 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
         [currentPageNumber, searchQuery, sortParams.sortField, sortParams.sortOrder, tabIndex, totalTasks]
     );
 
-    const { data, loading, error } = useQuery(GET_TASKS, {
+    const { data, loading, error } = useQuery<IQueryResponse>(GET_TASKS, {
         variables: { query: { ...query, limit: parseInt(totalTasks) } }
     });
 
@@ -132,11 +136,11 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
                 <SelectTaskCount totalTasks={totalTasks} setTotalTasks={handleTotalTasks} />
             </Box>
             <Box>
-                {data?.getTasks.totalPagesQty > 1 &&
+                {data?.getTasks.totalPagesQty ? data.getTasks.totalPagesQty > 1 ?
                     <PaginationControlled
-                        totalPagesQty={data?.getTasks.totalPagesQty}
+                        totalPagesQty={data.getTasks.totalPagesQty}
                         currentPage={handleCurrentPageNumber}
-                        currentPageNumber={currentPageNumber} />
+                        currentPageNumber={currentPageNumber} /> : null : null
                 }
             </Box>
             <SnackBar successMessage={succsessMessageHook} errorMessage={errorMessageHook} />

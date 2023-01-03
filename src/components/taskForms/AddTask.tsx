@@ -11,16 +11,20 @@ import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskField
 import { AddTaskFormValidation } from "../taskFields/taskFormValidation";
 
 import { CREATE_TASK } from "apollo/mutation/mutateTask";
-import { IAddTask } from "types/taskTypes";
+import { IAddTask, ITask } from "types/taskTypes";
 
 import "./task.scss";
+
+interface IMutationResponse {
+    createTask: ITask;
+}
 
 const AddTaskComponent: React.FC = () => {
 
     const [mdeValue, setMdeValue] = useState("");
     const navigate = useNavigate();
 
-    const [addTask, { loading }] = useMutation(CREATE_TASK, {
+    const [addTask, { loading }] = useMutation<IMutationResponse, {query: IAddTask}>(CREATE_TASK, {
         update(cache) {
             cache.modify({
                 fields: {

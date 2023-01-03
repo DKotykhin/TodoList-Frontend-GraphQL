@@ -2,12 +2,7 @@ import { DocumentNode, gql } from "@apollo/client";
 
 export const USER_REGISTER: DocumentNode = gql`
     mutation ($query: UserRegisterInput) {
-        userRegister(registerInput: $query) {
-            _id
-            name
-            email
-            avatarURL
-            createdAt
+        userRegister(registerInput: $query) {            
             token
             message
         }

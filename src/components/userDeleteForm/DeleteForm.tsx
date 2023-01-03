@@ -11,15 +11,19 @@ import SnackBar from "components/snackBar/SnackBar";
 import { useAppDispatch } from "store/hook";
 import { logout } from "store/userSlice";
 import { DELETE_USER } from "apollo/mutation/mutateUser";
+import { IUserDeleteResponse } from "types/userTypes";
 
+interface IResponse {
+    userDelete: IUserDeleteResponse;
+}
 
-const DeleteForm: React.FC<{ id: string }> = ({ id }) => {
+const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
 
     const [deleteError, setDeleteError] = useState('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [deleteUser, { loading }] = useMutation(DELETE_USER, {
+    const [deleteUser, { loading }] = useMutation<IResponse, { _id: string | undefined }>(DELETE_USER, {
         onCompleted: (data) => {
             const { message } = data.userDelete;
             console.log(message);
@@ -36,7 +40,7 @@ const DeleteForm: React.FC<{ id: string }> = ({ id }) => {
     })
 
     const handleDelete = () => {
-        setDeleteError('');        
+        setDeleteError('');
         deleteUser({ variables: { _id: id } });
     };
 

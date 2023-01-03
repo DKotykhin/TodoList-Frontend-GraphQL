@@ -10,13 +10,18 @@ import DeleteForm from "../userDeleteForm/DeleteForm";
 import ProfileForm from "../userProfileForm/ProfileForm";
 
 import { GET_USER_BY_TOKEN } from "apollo/query/getUser";
+import { IUser } from "types/userTypes";
 
 import "./profilelist.scss";
+
+interface IResponse {
+    getUserByToken: IUser;
+}
 
 const ProfileList: React.FC = () => {
 
     const navigate = useNavigate();
-    const { data } = useQuery(GET_USER_BY_TOKEN);
+    const { data } = useQuery<IResponse>(GET_USER_BY_TOKEN);
 
     return (
         <Container maxWidth="xs" className="profile">
@@ -31,7 +36,7 @@ const ProfileList: React.FC = () => {
                     )}`}
                 </Typography>
             </Paper>
-            <ProfileForm user={data.getUserByToken} />
+            <ProfileForm user={data?.getUserByToken} />
             <DeleteForm id={data?.getUserByToken._id} />
             <Button sx={{ m: 6 }} onClick={() => navigate("/")}>
                 Main Page

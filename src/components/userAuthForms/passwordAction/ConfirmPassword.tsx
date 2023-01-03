@@ -10,6 +10,7 @@ import SnackBar from "components/snackBar/SnackBar";
 import { PasswordFormValidation } from "../userFormValidation";
 
 import { USER_CONFIRM_PASSWORD } from "apollo/mutation/mutatePassword";
+import { IPasswordResponse, IUserUpdate } from "types/userTypes";
 
 import "../styleForm.scss";
 
@@ -20,12 +21,15 @@ interface IConfirmPassword {
 interface IPasswordData {
     currentpassword: string
 }
+interface IResponse {
+    userConfirmPassword: IPasswordResponse;
+}
 
 const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
 
     const [error, setError] = useState('');
 
-    const [confirmPassword, { loading }] = useMutation(USER_CONFIRM_PASSWORD, {
+    const [confirmPassword, { loading }] = useMutation<IResponse, IUserUpdate>(USER_CONFIRM_PASSWORD, {
         onCompleted: (data) => {
             const { status, message } = data.userConfirmPassword;
             console.log(message);
@@ -49,7 +53,7 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
 
     const onSubmit = (data: IPasswordData) => {
         setError('');
-        const { currentpassword } = data;        
+        const { currentpassword } = data;
         confirmPassword({ variables: { password: currentpassword } });
     };
 
