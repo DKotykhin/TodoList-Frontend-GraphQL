@@ -36,11 +36,8 @@ const DeleteForm: React.FC<{ id: string }> = ({ id }) => {
     })
 
     const handleDelete = () => {
-        setDeleteError('');
-        const del = {
-            query: { _id: id }
-        }
-        deleteUser({ variables: del });
+        setDeleteError('');        
+        deleteUser({ variables: { _id: id } });
     };
 
     return (

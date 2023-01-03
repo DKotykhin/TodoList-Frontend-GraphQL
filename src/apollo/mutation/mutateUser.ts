@@ -15,8 +15,8 @@ export const USER_REGISTER: DocumentNode = gql`
 `;
 
 export const USER_UPDATE_NAME: DocumentNode = gql`
-    mutation ($query: UserNameInput) {
-        userUpdateName(nameInput: $query) {
+    mutation ($name: String!) {
+        userUpdateName(name: $name) {
             _id
             name
             email
@@ -28,8 +28,8 @@ export const USER_UPDATE_NAME: DocumentNode = gql`
 `;
 
 export const DELETE_USER: DocumentNode = gql`
-    mutation ($query: UserDeleteInput) {
-        userDelete(deleteInput: $query) {
+    mutation ($_id: ID!) {
+        userDelete(_id: $_id) {
             taskStatus {
                 acknowledged
                 deletedCount
@@ -44,8 +44,8 @@ export const DELETE_USER: DocumentNode = gql`
 `;
 
 export const USER_UPLOAD_AVATAR_URL: DocumentNode = gql`
-    mutation ($query: UserAvatarInput) {
-        uploadAvatar(uploadAvatarInput: $query) {
+    mutation ($avatarURL: String!) {
+        uploadAvatar(avatarURL: $avatarURL) {
             avatarURL
             message
         }
@@ -53,8 +53,8 @@ export const USER_UPLOAD_AVATAR_URL: DocumentNode = gql`
 `;
 
 export const DELETE_AVATAR: DocumentNode = gql`
-    mutation ($query: UserDeleteInput) {
-        deleteAvatar(deleteAvatarInput: $query) {
+    mutation ($_id: ID!) {
+        deleteAvatar(_id: $_id) {
             avatarURL
             message
         }

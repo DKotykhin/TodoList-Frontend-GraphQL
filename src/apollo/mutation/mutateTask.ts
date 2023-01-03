@@ -31,8 +31,8 @@ export const UPDATE_TASK: DocumentNode = gql`
 `;
 
 export const DELETE_TASK: DocumentNode = gql`
-    mutation ($query: TaskDeleteInput) {
-        deleteTask(deleteTaskInput: $query) {
+    mutation ($_id: ID!) {
+        deleteTask(_id: $_id) {
             status {
                 deletedCount
                 acknowledged

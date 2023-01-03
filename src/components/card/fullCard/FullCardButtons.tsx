@@ -55,7 +55,7 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, successMessage, err
         successMessage('');
         errorMessage('');
         closeModal();
-        deleteTask({ variables: { query: { _id: id } } });
+        deleteTask({ variables: { _id: id } });
     };
 
     const handleUpdate = (id: string): void => {

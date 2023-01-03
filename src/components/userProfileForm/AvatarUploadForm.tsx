@@ -73,7 +73,7 @@ const AvatarUploadForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 .then((response) => {
                     console.log(response.message);
                     setLoadSuccess(response.message);
-                    loadAvatarURL({ variables: { query: { avatarURL: response.avatarURL } } });
+                    loadAvatarURL({ variables: { avatarURL: response.avatarURL } });
                     setFileName("");
                     reset();
                 })

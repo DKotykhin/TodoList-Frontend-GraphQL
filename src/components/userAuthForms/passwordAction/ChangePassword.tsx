@@ -47,11 +47,8 @@ const ChangePassword: React.FC = () => {
         setError('');
         setLoaded('');
         if (data.newpassword === data.confirmpassword) {
-            const { newpassword } = data;
-            const update = {
-                query: { password: newpassword }
-            };
-            updatePassword({ variables: update });
+            const { newpassword } = data;            
+            updatePassword({ variables: { password: newpassword } });
         } else {
             console.log("Passwords don't match");
             setError("Passwords don't match");

@@ -14,8 +14,8 @@ export const GET_USER_BY_TOKEN: DocumentNode = gql`
 `;
 
 export const USER_LOGIN: DocumentNode = gql`
-    query ($query: UserLoginInput) {
-        userLogin(loginInput: $query) {            
+    query ($email: String!, $password: String!) {
+        userLogin(email: $email, password: $password) {            
             token
             message
         }

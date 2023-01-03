@@ -25,7 +25,7 @@ const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
         setDeleteError('');
         const avatarURL: string | undefined = user?.avatarURL;
         if (avatarURL) {
-            deleteAvatar({ variables: { query: { _id: user?._id } } });
+            deleteAvatar({ variables: { _id: user?._id } });
         } else {
             console.log("Avatar doesn't exist");
             setDeleteError("Avatar doesn't exist");

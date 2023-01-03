@@ -37,11 +37,8 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
     const onSubmit = (updateData: IUserUpdate) => {
         setUpdateError('');
         const { name } = updateData;
-        if (name !== user?.name) {
-            const update = {
-                query: { name }
-            };
-            updateUser({ variables: update });
+        if (name !== user?.name) {            
+            updateUser({ variables: { name } });
         } else setUpdateError('The same name!');
     };
 

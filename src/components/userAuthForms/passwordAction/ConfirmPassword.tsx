@@ -49,11 +49,8 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
 
     const onSubmit = (data: IPasswordData) => {
         setError('');
-        const { currentpassword } = data;
-        const confirm = {
-            query: { password: currentpassword }
-        };
-        confirmPassword({ variables: confirm });
+        const { currentpassword } = data;        
+        confirmPassword({ variables: { password: currentpassword } });
     };
 
     return (
