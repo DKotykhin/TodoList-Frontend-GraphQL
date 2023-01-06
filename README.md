@@ -6,7 +6,7 @@ A brief description of what this project does and who it's for
 
 - Full Stack application
 - Express JS for backend
-- React, RTK Query, Typescript, MUI, SCSS for frontend
+- React, GraphQL, Apollo, Typescript, MUI, SCSS for frontend
 - React Hook Form, yup for validation 
 - Mongo DB database for content placing
 - Mobile friendly
@@ -17,14 +17,14 @@ A brief description of what this project does and who it's for
 To run this project, you will need to add the following environment variables to your .env file
 
 `REACT_APP_BACKEND_URL`
+`REACT_APP_UPLOAD_URL`
+
+
+## Deploy on Vercel
 
 
 
-## Deploy on Netlify
-
-
-
-  [todo-list-new-frontend.vercel.app](todo-list-new-frontend.vercel.app)
+  [todolist-frontend-graphql.vercel.app](todolist-frontend-graphql.vercel.app)
 
 
 
@@ -33,7 +33,7 @@ To run this project, you will need to add the following environment variables to
 Clone the project
 
 ```bash
-  git clone https://github.com/DKotykhin/TodoList-Frontend.git
+  git clone https://github.com/DKotykhin/TodoList-Frontend-GraphQL.git
 ```
 
 Go to the project directory
