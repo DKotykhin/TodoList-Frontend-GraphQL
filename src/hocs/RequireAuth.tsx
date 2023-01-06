@@ -2,7 +2,7 @@ import { useLocation, Navigate } from 'react-router-dom';
 
 import Spinner from "components/spinner/Spinner";
 
-import { useAuth } from "hooks/isAuth";
+import { useAuth } from "hooks/useAuth";
 import { getToken } from 'services/getToken';
 
 const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
