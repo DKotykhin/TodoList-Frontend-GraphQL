@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IAvatarResponse, IUser } from "types/userTypes";
+import { IUser } from "types/userTypes";
 
 const initialState: IUser = {
     _id: "",
@@ -18,17 +18,11 @@ const UserSlice = createSlice({
         setUser: (state, action: PayloadAction<IUser>) => {
             state.name = action.payload.name;
             state.avatarURL = action.payload.avatarURL;
-        },
-        updateAvatarURL: (
-            state,
-            action: PayloadAction<IAvatarResponse>
-        ) => {
-            state.avatarURL = action.payload.avatarURL;
-        },
+        },        
     },
 });
 
 const { actions, reducer } = UserSlice;
 
 export default reducer;
-export const { setUser, updateAvatarURL, logout } = actions;
+export const { setUser, logout } = actions;

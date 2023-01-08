@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { PasswordField } from "components/userFields";
-import SnackBar from "components/snackBar/SnackBar";
 import { PasswordFormValidation } from "../userFormValidation";
 
+import { useMutation } from '@apollo/client';
 import { USER_CONFIRM_PASSWORD } from "apollo/mutation/mutatePassword";
+
 import { IPasswordResponse, IUserUpdate } from "types/userTypes";
 
 import "../styleForm.scss";
@@ -27,8 +28,6 @@ interface IResponse {
 
 const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
 
-    const [error, setError] = useState('');
-
     const [confirmPassword, { loading }] = useMutation<IResponse, IUserUpdate>(USER_CONFIRM_PASSWORD, {
         onCompleted: (data) => {
             const { status, message } = data.userConfirmPassword;
@@ -36,12 +35,11 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
             if (status) {
                 confirmStatus(status)
             } else {
-                setError(message);
+                toast.error(message);
             }
         },
         onError: (err) => {
-            console.log(err.message);
-            setError(err.message);
+            toast.error(err.message);
         }
     });
 
@@ -52,7 +50,6 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
     } = useForm<IPasswordData>(PasswordFormValidation);
 
     const onSubmit = (data: IPasswordData) => {
-        setError('');
         const { currentpassword } = data;
         confirmPassword({ variables: { password: currentpassword } });
     };
@@ -79,7 +76,6 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
                     {loading ? 'Loading...' : "Confirm password"}
                 </Button>
             </Box>
-            <SnackBar successMessage="" errorMessage={error} />
         </>
     )
 }

@@ -22,12 +22,10 @@ import "./fullCard.scss";
 
 interface IFullCard {
     task: ITask;
-    successMessage: (arg0: string) => void;
-    errorMessage: (arg0: string) => void;
     closeModal: () => void;
 }
 
-const FullCard: React.FC<IFullCard> = ({ task, successMessage, errorMessage, closeModal }) => {
+const FullCard: React.FC<IFullCard> = ({ task, closeModal }) => {
     const { subtitle, description } = task;
 
     return (
@@ -55,8 +53,6 @@ const FullCard: React.FC<IFullCard> = ({ task, successMessage, errorMessage, clo
                 <FullCardButtons
                     task={task}
                     closeModal={closeModal}
-                    successMessage={successMessage}
-                    errorMessage={errorMessage}
                 />
             </CardActions>
         </Card>

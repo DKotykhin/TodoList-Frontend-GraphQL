@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { PasswordField } from "components/userFields";
-import SnackBar from "components/snackBar/SnackBar";
 import { NewPasswordFormValidation } from "../userFormValidation";
 
+import { useMutation } from '@apollo/client';
 import { USER_UPDATE_PASSWORD } from "apollo/mutation/mutatePassword";
+
 import { IPasswordResponse, IUserUpdate } from "types/userTypes";
 
 import "../styleForm.scss";
@@ -24,23 +25,19 @@ interface IResponse {
 
 const ChangePassword: React.FC = () => {
 
-    const [loaded, setLoaded] = useState('');
-    const [error, setError] = useState('');
-
     const [updatePassword, { loading }] = useMutation<IResponse, IUserUpdate>(USER_UPDATE_PASSWORD, {
         onCompleted: (data) => {
             const { message, status } = data.userUpdatePassword;
             console.log(message);
             if (status) {
-                setLoaded('Password successfully changed!');
+                toast.success('Password successfully changed!');
                 reset();
             } else {
-                setError(message);
+                toast.error(message);
             }
         },
         onError: (err) => {
-            console.log(err.message);
-            setError(err.message);
+            toast.error(err.message);
         }
     });
 
@@ -52,14 +49,11 @@ const ChangePassword: React.FC = () => {
     } = useForm<IPasswordData>(NewPasswordFormValidation);
 
     const onSubmit = (data: IPasswordData) => {
-        setError('');
-        setLoaded('');
         if (data.newpassword === data.confirmpassword) {
             const { newpassword } = data;
             updatePassword({ variables: { password: newpassword } });
         } else {
-            console.log("Passwords don't match");
-            setError("Passwords don't match");
+            toast.warn("Passwords don't match");
         }
     };
 
@@ -90,7 +84,6 @@ const ChangePassword: React.FC = () => {
                     {loading ? 'Loading...' : "Change password"}
                 </Button>
             </Box>
-            <SnackBar successMessage={loaded} errorMessage={error} />
         </>
     );
 }

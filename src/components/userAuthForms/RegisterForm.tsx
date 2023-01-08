@@ -1,15 +1,14 @@
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 
 import { Button, Container, Typography, Avatar, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { EmailField, NameField, PasswordField } from "components/userFields";
-import SnackBar from "components/snackBar/SnackBar";
 import { RegisterFormValidation } from "./userFormValidation";
 
+import { useMutation } from '@apollo/client';
 import { USER_REGISTER } from "apollo/mutation/mutateUser";
 import { ITokenResponse, IUserRegister } from "types/userTypes";
 
@@ -21,7 +20,6 @@ interface IResponse {
 
 const RegisterForm = () => {
 
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const [registerUser, { loading }] = useMutation<IResponse, { query: IUserRegister }>(USER_REGISTER, {
@@ -33,10 +31,9 @@ const RegisterForm = () => {
             reset();
         },
         onError: (err) => {
-            console.log(err.message);
-            setError(err.message)
+            toast.error(err.message)
         }
-    })
+    });
 
     const {
         control,
@@ -83,7 +80,6 @@ const RegisterForm = () => {
                         {loading ? 'Loading...' : "Register"}
                     </Button>
                 </Box>
-                <SnackBar successMessage="" errorMessage={error} />
             </Paper>
             <Typography className="form subtitle">
                 {"Already have account?"}

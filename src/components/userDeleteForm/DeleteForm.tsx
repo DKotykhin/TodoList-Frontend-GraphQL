@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from '@apollo/client';
-import client from "apollo/client";
+import { toast } from 'react-toastify';
 
 import { Typography, Paper } from "@mui/material";
 
 import DeleteDialog from "./DeleteDialog";
-import SnackBar from "components/snackBar/SnackBar";
 
-import { useAppDispatch } from "store/hook";
-import { logout } from "store/userSlice";
+import client from "apollo/client";
+import { useMutation } from '@apollo/client';
 import { DELETE_USER } from "apollo/mutation/mutateUser";
+
+import { logout } from "store/userSlice";
+import { useAppDispatch } from "store/hook";
+
 import { IUserDeleteResponse } from "types/userTypes";
 
 interface IResponse {
@@ -19,7 +21,6 @@ interface IResponse {
 
 const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
 
-    const [deleteError, setDeleteError] = useState('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -34,13 +35,11 @@ const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
             navigate("/login");
         },
         onError: (err) => {
-            console.log(err.message);
-            setDeleteError(err.message);
+            toast.error(err.message);
         }
     })
 
     const handleDelete = () => {
-        setDeleteError('');
         deleteUser({ variables: { _id: id } });
     };
 
@@ -49,7 +48,6 @@ const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
             <Typography className="profile subtitle">
                 {loading ? 'Deleting...' : 'Need to delete Profile?'}
             </Typography>
-            <SnackBar successMessage="" errorMessage={deleteError} />
             <DeleteDialog
                 dialogTitle={"You really want to delete user?"}
                 deleteAction={handleDelete}

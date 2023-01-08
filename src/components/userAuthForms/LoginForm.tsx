@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { useLazyQuery } from '@apollo/client';
+import { toast } from 'react-toastify';
 
 import { Button, Container, Typography, Box, Avatar, Paper } from "@mui/material";
 import { InputLabel, Checkbox } from "@mui/material";
 
 import { EmailField, PasswordField } from "components/userFields";
-import SnackBar from "components/snackBar/SnackBar";
 import { LoginFormValidation } from "./userFormValidation";
 
+import { useLazyQuery } from '@apollo/client';
 import { USER_LOGIN } from "apollo/query/getUser";
+
 import { ITokenResponse, IUserLogin } from "types/userTypes";
 
 import "./styleForm.scss";
@@ -27,7 +28,7 @@ const LoginForm: React.FC = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
 
-    const [fetchLogin, { loading, error }] = useLazyQuery<IResponse, IUserLogin>(USER_LOGIN, {
+    const [fetchLogin, { loading }] = useLazyQuery<IResponse, IUserLogin>(USER_LOGIN, {
         onCompleted: (data) => {
             const { token, message } = data.userLogin;
             console.log(message);
@@ -39,7 +40,7 @@ const LoginForm: React.FC = () => {
             reset();
         },
         onError: (err) => {
-            console.log(err.message);
+            toast.error(err.message);
         }
     });
 
@@ -94,7 +95,6 @@ const LoginForm: React.FC = () => {
                         {loading ? 'Loading...' : 'Login'}
                     </Button>
                 </Box>
-                <SnackBar successMessage="" errorMessage={error?.message || ""} />
             </Paper>
             <Typography className="form subtitle">
                 {"Don't have account?"}

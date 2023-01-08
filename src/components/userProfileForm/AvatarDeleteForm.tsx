@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import React from 'react';
+import { toast } from 'react-toastify';
 
 import DeleteDialog from "../userDeleteForm/DeleteDialog";
-import SnackBar from 'components/snackBar/SnackBar';
+
+import { useMutation } from '@apollo/client';
+import { DELETE_AVATAR } from 'apollo/mutation/mutateUser';
 
 import { IAvatarResponse, IUser } from 'types/userTypes';
-import { DELETE_AVATAR } from 'apollo/mutation/mutateUser';
 
 interface IResponse {
     deleteAvatar: IAvatarResponse;
-}
+};
 
 const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
 
-    const [deleteError, setDeleteError] = useState('');
-    const [deleteAvatar, { data, error }] = useMutation<IResponse, { _id: string | undefined }>(DELETE_AVATAR, {
+    const [deleteAvatar] = useMutation<IResponse, { _id: string | undefined }>(DELETE_AVATAR, {
         update(cache) {
             cache.modify({
                 fields: {
@@ -22,16 +22,16 @@ const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 }
             })
         },
+        onCompleted: (data) => toast.success(data.deleteAvatar.message),
+        onError: (err) => toast.error(err.message)
     });
 
     const handleDelete = () => {
-        setDeleteError('');
         const avatarURL: string | undefined = user?.avatarURL;
         if (avatarURL) {
             deleteAvatar({ variables: { _id: user?._id } });
         } else {
-            console.log("Avatar doesn't exist");
-            setDeleteError("Avatar doesn't exist");
+            toast.warn("Avatar doesn't exist");
         }
     };
 
@@ -41,7 +41,6 @@ const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 dialogTitle={"You really want to delete avatar?"}
                 deleteAction={handleDelete}
             />
-            <SnackBar successMessage={data?.deleteAvatar.message || ''} errorMessage={deleteError || error?.message || ""} />
         </>
     )
 }

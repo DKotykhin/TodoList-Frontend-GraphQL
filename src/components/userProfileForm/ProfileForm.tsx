@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
@@ -8,18 +8,20 @@ import { Box } from "@mui/system";
 import { ProfileFormValidation } from "./ProfileFormValidation";
 import AvatarUploadForm from "./AvatarUploadForm";
 import { EmailField, NameField } from "components/userFields";
-import SnackBar from "components/snackBar/SnackBar";
 
+import { useMutation } from '@apollo/client';
 import { USER_UPDATE_NAME } from "apollo/mutation/mutateUser";
+
 import { IUser, IUserUpdate } from "types/userTypes";
 
 const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
-    const [updateError, setUpdateError] = useState('');
-
-    const [updateUser, { data, loading }] = useMutation(USER_UPDATE_NAME, {
-        onError: (err) => {
-            console.log(err.message);
-            setUpdateError(err.message);
+    
+    const [updateUser, { loading }] = useMutation(USER_UPDATE_NAME, {
+        onCompleted: (data) => {
+            toast.success(data.userUpdateName.message)
+        },
+        onError: (err) => {            
+            toast.error(err.message);
         }
     });
 
@@ -34,12 +36,11 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
         reset({ name: user?.name, email: user?.email });
     }, [reset, user?.name, user?.email]);
 
-    const onSubmit = (updateData: IUserUpdate) => {
-        setUpdateError('');
+    const onSubmit = (updateData: IUserUpdate) => {        
         const { name } = updateData;
         if (name !== user?.name) {            
             updateUser({ variables: { name } });
-        } else setUpdateError('The same name!');
+        } else toast.warn('The same name!');
     };
 
     return (
@@ -69,8 +70,7 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
                     sx={{ m: 3 }}
                 >
                     {loading ? 'Loading...' : 'Save name'}
-                </Button>
-                <SnackBar successMessage={data?.userUpdateName.message || ''} errorMessage={updateError} />
+                </Button>                
             </Box>
         </Paper>
     )

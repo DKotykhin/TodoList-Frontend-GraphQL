@@ -1,16 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { toast } from 'react-toastify';
 
 import { Button } from "@mui/material";
 
+import { useMutation } from "@apollo/client";
 import { DELETE_TASK, UPDATE_TASK } from 'apollo/mutation/mutateTask';
+
 import { ICompleteTask, ITask, ITaskDeleteResponse, ITaskUpdateResponse, IUpdateTask } from "types/taskTypes";
 
 interface IFullCardButtons {
     task: ITask;
-    successMessage: (arg0: string) => void;
-    errorMessage: (arg0: string) => void;
     closeModal: () => void;
 }
 interface IUpdateResponse {
@@ -21,7 +21,7 @@ interface IDeleteResponse {
     deleteTask: ITaskDeleteResponse;
 }
 
-const FullCardButtons: React.FC<IFullCardButtons> = ({ task, successMessage, errorMessage, closeModal }) => {
+const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
     const { _id, completed } = task;
 
     const [updateTask, { loading }] = useMutation<IUpdateResponse, { query: IUpdateTask }>(UPDATE_TASK, {
@@ -33,10 +33,10 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, successMessage, err
             })
         },
         onCompleted: (data) => {
-            successMessage(data.updateTask.message)
+            toast.success(data.updateTask.message)
         },
         onError: (err) => {
-            errorMessage(err.message);
+            toast.error(err.message);
         }
     });
 
@@ -49,18 +49,16 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, successMessage, err
             })
         },
         onCompleted: (data) => {
-            successMessage(data.deleteTask.message)
+            toast.success(data.deleteTask.message)
         },
         onError: (err) => {
-            errorMessage(err.message);
+            toast.error(err.message);
         }
     });
 
     const navigate = useNavigate();
 
     const handleDelete = (id: string) => {
-        successMessage('');
-        errorMessage('');
         closeModal();
         deleteTask({ variables: { _id: id } });
     };
@@ -70,8 +68,6 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, successMessage, err
     };
 
     const handleComplete = (data: ITask) => {
-        successMessage('');
-        errorMessage('');
         closeModal();
         const newData: ICompleteTask = { completed: !data.completed, _id: data._id, title: data?.title };
         updateTask({ variables: { query: newData } });

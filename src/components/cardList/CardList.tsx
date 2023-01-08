@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from "react-router-dom";
-import { useQuery } from "@apollo/client";
 
 import { Box, Container, Typography, Modal } from "@mui/material";
 
@@ -9,11 +8,12 @@ import PaginationControlled from './PaginationControlled';
 import ShortCardList from 'components/card/shortCard/ShortCardList';
 import FullCard from 'components/card/fullCard/FullCard';
 import Spinner from 'components/spinner/Spinner';
-import SnackBar from 'components/snackBar/SnackBar';
+
+import { useQuery } from "@apollo/client";
+import { GET_TASKS } from 'apollo/query/getTasks';
 
 import { setQuery } from "store/querySlice";
 import { useAppDispatch, useAppSelector } from "store/hook";
-import { GET_TASKS } from 'apollo/query/getTasks';
 import { useFormQuery } from 'hooks/useFormQuery';
 
 import { ITask, ITaskResponse } from 'types/taskTypes';
@@ -40,9 +40,6 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
 
     const [cardFullOpen, setCardFullOpen] = useState(false);
     const [cardFullId, setCardFullId] = useState("");
-
-    const [succsessMessageHook, setSuccsessMessageHook] = useState("");
-    const [errorMessageHook, setErrorMessageHook] = useState("");
 
     const dispatch = useAppDispatch();
 
@@ -87,14 +84,6 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
         setCardFullOpen(false);
     };
 
-    const successMessage = (data: string): void => {
-        setSuccsessMessageHook(data);
-    };
-
-    const errorMessage = (data: string): void => {
-        setErrorMessageHook(data);
-    };
-
     return !loading ? (
         <Container className="cardList" maxWidth="xl">
             <Box className="cardList cardListBox">
@@ -102,8 +91,6 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
                     <Box sx={{ boxShadow: 24 }} className='cardList fullCard'>
                         <FullCard
                             task={fullCard}
-                            successMessage={successMessage}
-                            errorMessage={errorMessage}
                             closeModal={cardFullClose}
                         />
                     </Box>
@@ -127,7 +114,6 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
                         currentPageNumber={currentPageNumber} /> : null : null
                 }
             </Box>
-            <SnackBar successMessage={succsessMessageHook} errorMessage={errorMessageHook} />
         </Container>
     ) : !!error ? <Navigate to={'/login'} /> : <Spinner />
 }
