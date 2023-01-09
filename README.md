@@ -1,16 +1,31 @@
-
 # Todo List
 
-A brief description of what this project does and who it's for
+Full stack application
+
+## Technologies
+
+-   Backend: Node JS, Express JS, GraphQL, Mongoose, Multer, Yup, JWT
+-   Frontend: React, GraphQL, Apollo, Typescript, React Hook Form, MUI, Markdown, Tostify, SCSS
+-   Database: Mongo DB
+
 ## Features
 
-- Full Stack application
-- Express JS for backend
-- React, GraphQL, Apollo, Typescript, MUI, SCSS for frontend
-- React Hook Form, yup for validation 
-- Mongo DB database for content placing
-- Mobile friendly
-
+-   User login/logout, delete and registration
+-   Authification by token
+-   User update name and password
+-   User upload/delete avatar
+-   Validation all fields
+-   CRUD tasks
+-   Short/Full card
+-   Quick complete
+-   Markdown for description field
+-   Tabs: All, Active, Done
+-   Sort by created, deadline, title from DB
+-   Search by title from DB
+-   Color deadline notification
+-   Toast success/Error notification
+-   Pagination
+-   Mobile friendly
 
 ## Environment Variables
 
@@ -19,14 +34,9 @@ To run this project, you will need to add the following environment variables to
 `REACT_APP_BACKEND_URL`
 `REACT_APP_UPLOAD_URL`
 
-
 ## Deploy on Vercel
 
-
-
-  [todolist-frontend-graphql.vercel.app](todolist-frontend-graphql.vercel.app)
-
-
+[todolist-frontend-graphql.vercel.app](todolist-frontend-graphql.vercel.app)
 
 ## Run Locally
 
@@ -60,13 +70,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Color Reference
 
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
+| Color     | Hex                                                              |
+| --------- | ---------------------------------------------------------------- |
 | Firm grey | ![#808080](https://via.placeholder.com/10/333333?text=+) #808080 |
 | Firm mint | ![#00a1b6](https://via.placeholder.com/10/00a1b6?text=+) #00a1b6 |
 
-
 ## Author
 
-- [@DKotykhin](https://github.com/DKotykhin)
-
+-   [@DKotykhin](https://github.com/DKotykhin)
