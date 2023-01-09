@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@apollo/client";
+import { toast } from 'react-toastify';
 
 import { Box } from "@mui/system";
 import { Container, Typography } from "@mui/material";
@@ -10,7 +10,9 @@ import SubmitCancelButtons from "./SubmitCancelButtons";
 import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskFields";
 import { AddTaskFormValidation } from "../taskFields/taskFormValidation";
 
+import { useMutation } from "@apollo/client";
 import { CREATE_TASK } from "apollo/mutation/mutateTask";
+
 import { IAddTask, ITask } from "types/taskTypes";
 
 import "./task.scss";
@@ -24,7 +26,7 @@ const AddTaskComponent: React.FC = () => {
     const [mdeValue, setMdeValue] = useState("");
     const navigate = useNavigate();
 
-    const [addTask, { loading }] = useMutation<IMutationResponse, {query: IAddTask}>(CREATE_TASK, {
+    const [addTask, { loading }] = useMutation<IMutationResponse, { query: IAddTask }>(CREATE_TASK, {
         update(cache) {
             cache.modify({
                 fields: {
@@ -35,10 +37,7 @@ const AddTaskComponent: React.FC = () => {
         onCompleted: () => {
             navigate("/", { replace: true })
         },
-        onError: (err) => {
-            console.log(err.message);
-            alert(err.message);
-        }
+        onError: (err) => toast.error(err.message)
     });
 
     const {

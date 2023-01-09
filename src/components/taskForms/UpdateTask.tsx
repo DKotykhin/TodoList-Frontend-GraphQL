@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "@apollo/client";
+import { toast } from 'react-toastify';
 
 import { format } from "date-fns";
 
@@ -12,9 +12,12 @@ import { UpdateTaskFormValidation } from "../taskFields/taskFormValidation";
 import SubmitCancelButtons from "./SubmitCancelButtons";
 import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskFields";
 
+import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_TASK } from 'apollo/mutation/mutateTask';
 import { GET_TASKS } from "apollo/query/getTasks";
 import { useAppSelector } from 'store/hook';
+import { querySelector } from "store/querySlice";
+
 import { ITask, ITaskResponse, ITaskUpdateResponse, IUpdateTask } from "types/taskTypes";
 
 import "./task.scss";
@@ -39,11 +42,10 @@ const UpdateTaskComponent: React.FC = () => {
     const [mdeValue, setMdeValue] = useState("");;
     const navigate = useNavigate();
 
-    const { query } = useAppSelector((state) => state.query);
-    const { query: { limit } } = useAppSelector((state) => state.query);
+    const { query } = useAppSelector(querySelector);
 
     const { data } = useQuery<IQueryResponse>(GET_TASKS, {
-        variables: { query: { ...query, limit: parseInt(limit) } }
+        variables: { query: { ...query, limit: parseInt(query.limit) } }
     });
 
     const [updateTask, { loading }] = useMutation<IMutationResponse, { query: IUpdateTask }>(UPDATE_TASK, {
@@ -57,10 +59,7 @@ const UpdateTaskComponent: React.FC = () => {
         onCompleted: () => {
             navigate("/", { replace: true })
         },
-        onError: (err) => {
-            console.log(err.message);
-            alert(err.message);
-        }
+        onError: (err) => toast.error(err.message)
     });
 
     const {

@@ -7,7 +7,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import NavBarMenu from "./NavBarMenu";
 
-import { selectUser } from "store/selectors";
+import { userSelector } from "store/userSlice";
 import { useAppSelector } from "store/hook";
 
 import "./navBar.scss";
@@ -16,7 +16,7 @@ const Base_URL = process.env.REACT_APP_UPLOAD_URL;
 
 const NavBar: React.FC = () => {
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-    const { avatarURL, name: userName } = useAppSelector(selectUser);
+    const { avatarURL, name: userName } = useAppSelector(userSelector);
 
     const userAvatarURL = avatarURL ? Base_URL + avatarURL : "/";
 

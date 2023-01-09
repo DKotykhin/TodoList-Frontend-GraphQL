@@ -5,13 +5,10 @@ import user from "./userSlice";
 
 const store = configureStore({
     reducer: {
-        user,       
+        user,
         query,
     },
     devTools: process.env.NODE_ENV !== "production",
 });
 
 export default store;
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;

@@ -12,7 +12,7 @@ import Spinner from 'components/spinner/Spinner';
 import { useQuery } from "@apollo/client";
 import { GET_TASKS } from 'apollo/query/getTasks';
 
-import { setQuery } from "store/querySlice";
+import { querySelector, setQuery } from "store/querySlice";
 import { useAppDispatch, useAppSelector } from "store/hook";
 import { useFormQuery } from 'hooks/useFormQuery';
 
@@ -33,7 +33,7 @@ interface IQueryResponse {
 
 const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZData }) => {
 
-    const { query: { limit, page } } = useAppSelector((state) => state.query);
+    const { query: { limit, page } } = useAppSelector(querySelector);
 
     const [totalTasks, setTotalTasks] = useState(limit);
     const [currentPageNumber, setCurrentPageNumber] = useState(page);

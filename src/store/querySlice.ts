@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./hook";
+
 import { IQueryData } from "types/taskTypes";
 
 interface IQuerySlise {
@@ -29,3 +31,5 @@ const { actions, reducer } = QuerySlice;
 
 export default reducer;
 export const { setQuery } = actions;
+
+export const querySelector = (state: RootState) => state.query;

@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./hook";
+
 import { IUser } from "types/userTypes";
 
 const initialState: IUser = {
@@ -26,3 +28,5 @@ const { actions, reducer } = UserSlice;
 
 export default reducer;
 export const { setUser, logout } = actions;
+
+export const userSelector = (state: RootState) => state.user;

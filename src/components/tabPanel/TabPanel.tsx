@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import { useAppSelector } from 'store/hook';
 
 import './tabPanel.scss'
+import { querySelector } from 'store/querySlice';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -55,7 +56,7 @@ function a11yProps(index: number) {
 
 const TabPanelComponent: React.FC = () => {
 
-    const { query: { tabKey } } = useAppSelector((state) => state.query);
+    const { query: { tabKey } } = useAppSelector(querySelector);
     const [tabIndex, setTabIndex] = useState(tabKey);
 
     const [showSearchPanel, setShowSearchPanel] = useState(false);
