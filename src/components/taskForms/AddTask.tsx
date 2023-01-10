@@ -49,12 +49,11 @@ const AddTaskComponent: React.FC = () => {
 
     const onSubmit = (data: IAddTask) => {
         const { title, subtitle, deadline } = data;
-        const newDeadline: string = deadline ? new Date(deadline).toJSON() : ''
         const newData: IAddTask = {
             title,
             subtitle,
             description: mdeValue,
-            deadline: newDeadline,
+            ...(deadline && { deadline: new Date(deadline).toJSON() }),
             completed: false
         };
         addTask({ variables: { query: newData } });

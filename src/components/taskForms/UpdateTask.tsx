@@ -78,14 +78,13 @@ const UpdateTaskComponent: React.FC = () => {
 
     const onSubmit = (data: IUpdateForm) => {
         const { title, subtitle, deadline, completed } = data;
-        const newDeadline = deadline ? new Date(deadline).toJSON() : '';
         const totalData: IUpdateTask = {
             _id,
             title,
             subtitle,
             completed,
             description: mdeValue,
-            deadline: newDeadline,
+            ...(deadline && { deadline: new Date(deadline).toJSON() }),
         };
         updateTask({ variables: { query: totalData } })
     };
