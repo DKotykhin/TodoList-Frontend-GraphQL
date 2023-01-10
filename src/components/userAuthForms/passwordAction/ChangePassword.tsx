@@ -37,7 +37,7 @@ const ChangePassword: React.FC = () => {
             }
         },
         onError: (err) => {
-            toast.error(err.message);
+            toast.error(err.message);            
         }
     });
 

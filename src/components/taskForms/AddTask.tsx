@@ -34,7 +34,8 @@ const AddTaskComponent: React.FC = () => {
                 }
             })
         },
-        onCompleted: () => {
+        onCompleted: (data) => {
+            toast.success(data.createTask.message)
             navigate("/", { replace: true })
         },
         onError: (err) => toast.error(err.message)

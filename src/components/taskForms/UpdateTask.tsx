@@ -56,7 +56,8 @@ const UpdateTaskComponent: React.FC = () => {
                 }
             })
         },
-        onCompleted: () => {
+        onCompleted: (data) => {
+            toast.success(data.updateTask.message)
             navigate("/", { replace: true })
         },
         onError: (err) => toast.error(err.message)
