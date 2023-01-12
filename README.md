@@ -23,7 +23,7 @@ Full stack application
 -   Sort by created, deadline, title from DB
 -   Search by title from DB
 -   Color deadline notification
--   Toast success/Error notification
+-   Customer success/error notification
 -   Pagination
 -   Mobile friendly
 
@@ -61,7 +61,7 @@ Install dependencies
 Start the server
 
 ```bash
-npm run dev
+npm start
 # or
 yarn
 ```

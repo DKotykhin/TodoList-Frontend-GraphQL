@@ -12,20 +12,15 @@ import ChangePasswordPage from "pages/ChangePasswordPage";
 import UpdateTask from "pages/UpdateTaskPage";
 import AddTask from "pages/AddTaskPage";
 
-const ReqAuth = (element: JSX.Element): JSX.Element => {
-    return (
-        <RequireAuth>{element}</RequireAuth>
-    )
-};
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<Layout />}>
-            <Route index element={ReqAuth(<HomePage />)} />
-            <Route path="/addtask" element={ReqAuth(<AddTask />)} />
-            <Route path="/updatetask/:taskId" element={ReqAuth(<UpdateTask />)} />
-            <Route path="profile" element={ReqAuth(<ProfilePage />)} />
-            <Route path="password" element={ReqAuth(<ChangePasswordPage />)} />
+            <Route index element={<RequireAuth children={<HomePage />} />} />
+            <Route path="addtask" element={<RequireAuth children={<AddTask />} />} />
+            <Route path="updatetask/:taskId" element={<RequireAuth children={<UpdateTask />} />} />
+            <Route path="profile" element={<RequireAuth children={<ProfilePage />} />} />
+            <Route path="password" element={<RequireAuth children={<ChangePasswordPage />} />} />
             <Route path="registration" element={<RegistrationPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="*" element={<Page404 />} />
