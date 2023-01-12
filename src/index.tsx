@@ -4,12 +4,12 @@ import { Provider } from "react-redux";
 import { ToastContainer, Flip } from 'react-toastify';
 
 import { ApolloProvider } from '@apollo/client';
-import client from 'apollo/client';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import store from "./store/store";
+import client from 'apollo/client';
+import store from "store/store";
 import { router } from './App';
 
 import 'react-toastify/dist/ReactToastify.css';

@@ -1,7 +1,7 @@
 import { DocumentNode, gql } from "@apollo/client";
 
 export const CREATE_TASK: DocumentNode = gql`
-    mutation ($query: TaskInput) {
+    mutation ($query: TaskAddInput) {
         createTask(createTaskInput: $query) {
             _id
             title
@@ -16,7 +16,7 @@ export const CREATE_TASK: DocumentNode = gql`
 `;
 
 export const UPDATE_TASK: DocumentNode = gql`
-    mutation ($query: TaskInput) {
+    mutation ($query: TaskUpdateInput) {
         updateTask(updateTaskInput: $query) {
             status {
                 matchedCount
