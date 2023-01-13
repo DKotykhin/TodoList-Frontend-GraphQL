@@ -9,11 +9,12 @@ import AZSort from 'components/cardSort/AZSort';
 import SearchTask from 'components/searchTask/SearchTask';
 import CardList from 'components/cardList/CardList';
 
-import PropTypes from "prop-types";
 import { useAppSelector } from 'store/hook';
+import { querySelector } from 'store/querySlice';
+
+import PropTypes from "prop-types";
 
 import './tabPanel.scss'
-import { querySelector } from 'store/querySlice';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -56,15 +57,15 @@ function a11yProps(index: number) {
 
 const TabPanelComponent: React.FC = () => {
 
-    const { query: { tabKey } } = useAppSelector(querySelector);
+    const { query: { tabKey, sortOrder, sortField } } = useAppSelector(querySelector);
     const [tabIndex, setTabIndex] = useState(tabKey);
 
     const [showSearchPanel, setShowSearchPanel] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
 
-    const [fieldData, setFieldData] = useState('created');
-    const [AZData, setAZData] = useState('A-z');
+    const [fieldData, setFieldData] = useState(sortField);
+    const [AZData, setAZData] = useState(sortOrder);
 
     const navigate = useNavigate();
 
@@ -91,7 +92,7 @@ const TabPanelComponent: React.FC = () => {
         setFieldData(data);
     };
 
-    const AZSelect = (data: string) => {
+    const AZSelect = (data: number) => {
         setAZData(data);
     };
 
@@ -115,14 +116,14 @@ const TabPanelComponent: React.FC = () => {
                 </Box>
             </Box>
             <Button
-                className='tabPanel button'                
+                className='tabPanel button'
                 variant="contained"
                 onClick={handleAddTask}
             >
                 Add Task
             </Button>
-            <FieldSort onSelect={FieldSelect} value={fieldData} />
-            <AZSort onSelect={AZSelect} value={AZData} />
+            <FieldSort onSelect={FieldSelect} fieldValue={fieldData} />
+            <AZSort onSelect={AZSelect} sortValue={AZData} />
 
             {showSearchPanel &&
                 <SearchTask onSearch={onSearch} />

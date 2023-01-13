@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Navigate } from "react-router-dom";
 
 import { Box, Container, Typography, Modal } from "@mui/material";
@@ -14,9 +14,8 @@ import { GET_TASKS } from 'apollo/query/getTasks';
 
 import { querySelector, setQuery } from "store/querySlice";
 import { useAppDispatch, useAppSelector } from "store/hook";
-import { useFormQuery } from 'hooks/useFormQuery';
 
-import { ITask, ITaskResponse } from 'types/taskTypes';
+import { IQueryData, ITask, ITaskResponse } from 'types/taskTypes';
 
 import "./cardList.scss";
 
@@ -24,7 +23,7 @@ interface ICardListNew {
     tabIndex: number;
     searchQuery: string;
     fieldData: string;
-    AZData: string;
+    AZData: number;
 }
 
 interface IQueryResponse {
@@ -35,7 +34,7 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
 
     const { query: { limit, page } } = useAppSelector(querySelector);
 
-    const [totalTasks, setTotalTasks] = useState(limit);
+    const [tasksOnPage, setTasksOnPage] = useState(limit);
     const [currentPageNumber, setCurrentPageNumber] = useState(page);
 
     const [cardFullOpen, setCardFullOpen] = useState(false);
@@ -43,17 +42,27 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
 
     const dispatch = useAppDispatch();
 
-    const query = useFormQuery({
-        totalTasks,
-        currentPageNumber,
-        tabIndex,
-        searchQuery,
-        fieldData,
-        AZData
-    });
+    const query: IQueryData = useMemo(
+        () => ({
+            limit: tasksOnPage,
+            page: currentPageNumber,
+            tabKey: tabIndex,
+            sortField: fieldData,
+            sortOrder: AZData,
+            search: searchQuery,
+        }),
+        [
+            currentPageNumber,
+            searchQuery,
+            fieldData,
+            AZData,
+            tabIndex,
+            tasksOnPage,
+        ]
+    );
 
     const { data, loading, error } = useQuery<IQueryResponse>(GET_TASKS, {
-        variables: { query: { ...query, limit: parseInt(totalTasks) } }
+        variables: { query }
     });
 
     const taskdata = data?.getTasks.tasks ? data.getTasks.tasks : [];
@@ -61,14 +70,14 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
 
     useEffect(() => {
         setCurrentPageNumber(1);
-    }, [tabIndex]);
+    }, [tabIndex, tasksOnPage]);
 
     useEffect(() => {
         dispatch(setQuery({ query }));
     }, [dispatch, query]);
 
-    const handleTotalTasks = (data: string) => {
-        setTotalTasks(data);
+    const handleTasksOnPage = (data: number) => {
+        setTasksOnPage(data);
     };
 
     const handleCurrentPageNumber = (value: number) => {
@@ -104,7 +113,7 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
             </Box>
             <Box className="cardList taskAmountBox" >
                 <Typography className="cardList taskAmount" >tasks on page:</Typography>
-                <SelectTaskCount totalTasks={totalTasks} setTotalTasks={handleTotalTasks} />
+                <SelectTaskCount tasksOnPage={tasksOnPage} setTasksOnPage={handleTasksOnPage} />
             </Box>
             <Box>
                 {data?.getTasks.totalPagesQty ? data.getTasks.totalPagesQty > 1 ?

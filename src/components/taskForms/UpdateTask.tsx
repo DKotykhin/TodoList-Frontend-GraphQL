@@ -45,7 +45,7 @@ const UpdateTaskComponent: React.FC = () => {
     const { query } = useAppSelector(querySelector);
 
     const { data } = useQuery<IQueryResponse>(GET_TASKS, {
-        variables: { query: { ...query, limit: parseInt(query.limit) } }
+        variables: { query }
     });
 
     const [updateTask, { loading }] = useMutation<IMutationResponse, { query: IUpdateTask }>(UPDATE_TASK, {
