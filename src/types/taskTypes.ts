@@ -21,7 +21,7 @@ export interface ICompleteTask {
 }
 
 export interface IQueryData {
-    limit: string;
+    limit: number;
     page: number;
     tabKey: number;
     sortField: string;

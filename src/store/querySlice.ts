@@ -8,7 +8,7 @@ interface IQuerySlise {
 }
 const initialState: IQuerySlise = {
     query: {
-        limit: '6',
+        limit: 6,
         page: 1,
         tabKey: 0,
         sortField: 'createdAt',
