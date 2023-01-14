@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 // import client from "apollo/client";
 import { useApolloClient } from "@apollo/client";
 
-import { useAppDispatch } from "store/hook";
+import { useAppDispatch } from "store/reduxHooks";
 import { logout } from "store/userSlice";
 
 const settings = ["Profile", "Change password", "Logout"];

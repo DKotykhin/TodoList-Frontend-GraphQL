@@ -13,10 +13,10 @@ const Error: React.FC = () => {
         <Box className="error">
             <img src={img} alt="error" className="error image" />
             <Typography className="error title">
-                Сторінка не знайдена
+                Page not found
             </Typography>
             <Link className="error link" to="/">
-                Повернутися на головну
+                Return to main page
             </Link>
         </Box>
     );

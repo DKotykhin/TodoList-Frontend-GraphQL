@@ -15,7 +15,7 @@ import { TitleField, MDEField, SubtitleField, DeadlineField } from "../taskField
 import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_TASK } from 'apollo/mutation/mutateTask';
 import { GET_TASKS } from "apollo/query/getTasks";
-import { useAppSelector } from 'store/hook';
+import { useAppSelector } from 'store/reduxHooks';
 import { querySelector } from "store/querySlice";
 
 import { ITask, ITaskResponse, ITaskUpdateResponse, IUpdateTask } from "types/taskTypes";

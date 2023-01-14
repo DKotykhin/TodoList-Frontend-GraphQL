@@ -11,7 +11,7 @@ import { useMutation } from '@apollo/client';
 import { DELETE_USER } from "apollo/mutation/mutateUser";
 
 import { logout } from "store/userSlice";
-import { useAppDispatch } from "store/hook";
+import { useAppDispatch } from "store/reduxHooks";
 
 import { IUserDeleteResponse } from "types/userTypes";
 

@@ -9,7 +9,7 @@ import AZSort from 'components/cardSort/AZSort';
 import SearchTask from 'components/searchTask/SearchTask';
 import CardList from 'components/cardList/CardList';
 
-import { useAppSelector } from 'store/hook';
+import { useAppSelector } from 'store/reduxHooks';
 import { querySelector } from 'store/querySlice';
 
 import PropTypes from "prop-types";

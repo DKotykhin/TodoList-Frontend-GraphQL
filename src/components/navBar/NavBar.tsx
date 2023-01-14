@@ -8,7 +8,7 @@ import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import NavBarMenu from "./NavBarMenu";
 
 import { userSelector } from "store/userSlice";
-import { useAppSelector } from "store/hook";
+import { useAppSelector } from "store/reduxHooks";
 
 import "./navBar.scss";
 

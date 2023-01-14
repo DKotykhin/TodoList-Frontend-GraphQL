@@ -13,7 +13,7 @@ import { useQuery } from "@apollo/client";
 import { GET_TASKS } from 'apollo/query/getTasks';
 
 import { querySelector, setQuery } from "store/querySlice";
-import { useAppDispatch, useAppSelector } from "store/hook";
+import { useAppDispatch, useAppSelector } from "store/reduxHooks";
 
 import { IQueryData, ITask, ITaskResponse } from 'types/taskTypes';
 
