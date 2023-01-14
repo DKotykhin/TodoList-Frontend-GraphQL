@@ -22,15 +22,15 @@ import "./cardList.scss";
 interface ICardListNew {
     tabIndex: number;
     searchQuery: string;
-    fieldData: string;
-    AZData: number;
+    fieldValue: string;
+    AZValue: number;
 }
 
 interface IQueryResponse {
     getTasks: ITaskResponse;
 }
 
-const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZData }) => {
+const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldValue, AZValue }) => {
 
     const { query: { limit, page } } = useAppSelector(querySelector);
 
@@ -47,15 +47,15 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldData, AZ
             limit: tasksOnPage,
             page: currentPageNumber,
             tabKey: tabIndex,
-            sortField: fieldData,
-            sortOrder: AZData,
+            sortField: fieldValue,
+            sortOrder: AZValue,
             search: searchQuery,
         }),
         [
             currentPageNumber,
             searchQuery,
-            fieldData,
-            AZData,
+            fieldValue,
+            AZValue,
             tabIndex,
             tasksOnPage,
         ]
