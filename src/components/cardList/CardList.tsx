@@ -105,8 +105,8 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldValue, A
                     </Box>
                 </Modal>
                 <Typography className="cardList subtitle">
-                    {taskdata.length
-                        ? `Total amount: ${taskdata.length}`
+                    {data?.getTasks.totalTasksQty
+                        ? `On page: ${data.getTasks.tasksOnPageQty}, total: ${data.getTasks.totalTasksQty}`
                         : "No cards"}
                 </Typography>
                 <ShortCardList taskdata={taskdata} handleOpenFullCard={handleOpenFullCard} />
