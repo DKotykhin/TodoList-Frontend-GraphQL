@@ -1,7 +1,7 @@
 import { DocumentNode, gql } from "@apollo/client";
 
 export const GET_USER_BY_TOKEN: DocumentNode = gql`
-    query UserToken{
+    query userToken{
         getUserByToken {
             _id
             email
@@ -14,8 +14,13 @@ export const GET_USER_BY_TOKEN: DocumentNode = gql`
 `;
 
 export const USER_LOGIN: DocumentNode = gql`
-    query ($email: String!, $password: String!) {
-        userLogin(email: $email, password: $password) {            
+    query userLogin($email: String!, $password: String!) {
+        userLogin(email: $email, password: $password) {
+            _id
+            email
+            name
+            avatarURL
+            createdAt            
             token
             message
         }

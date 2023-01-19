@@ -18,7 +18,7 @@ import { GET_TASKS } from "apollo/query/getTasks";
 import { useAppSelector } from 'store/reduxHooks';
 import { querySelector } from "store/querySlice";
 
-import { ITask, ITaskResponse, ITaskUpdateResponse, IUpdateTask } from "types/taskTypes";
+import { ITask, ITaskResponse, IUpdateTask } from "types/taskTypes";
 
 import "./task.scss";
 
@@ -33,7 +33,7 @@ interface IQueryResponse {
     getTasks: ITaskResponse;
 }
 interface IMutationResponse {
-    updateTask: ITaskUpdateResponse;
+    updateTask: ITask;
 }
 
 const UpdateTaskComponent: React.FC = () => {

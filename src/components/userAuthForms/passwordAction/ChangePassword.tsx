@@ -9,7 +9,7 @@ import { PasswordField } from "components/userFields";
 import { NewPasswordFormValidation } from "../userFormValidation";
 
 import { useMutation } from '@apollo/client';
-import { USER_UPDATE_PASSWORD } from "apollo/mutation/mutatePassword";
+import { USER_UPDATE_PASSWORD } from "apollo/mutation/mutateUser";
 
 import { IPasswordResponse, IUserUpdate } from "types/userTypes";
 
@@ -37,7 +37,7 @@ const ChangePassword: React.FC = () => {
             }
         },
         onError: (err) => {
-            toast.error(err.message);            
+            toast.error(err.message);
         }
     });
 

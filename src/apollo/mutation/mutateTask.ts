@@ -18,12 +18,13 @@ export const CREATE_TASK: DocumentNode = gql`
 export const UPDATE_TASK: DocumentNode = gql`
     mutation ($query: TaskUpdateInput) {
         updateTask(updateTaskInput: $query) {
-            status {
-                matchedCount
-                modifiedCount
-                upsertedId
-                acknowledged
-            }
+            _id
+            title
+            subtitle
+            description
+            completed
+            deadline
+            createdAt            
             message
         }
     }

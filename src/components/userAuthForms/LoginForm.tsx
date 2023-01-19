@@ -12,7 +12,7 @@ import { LoginFormValidation } from "./userFormValidation";
 import { useLazyQuery } from '@apollo/client';
 import { USER_LOGIN } from "apollo/query/getUser";
 
-import { ITokenResponse, IUserLogin } from "types/userTypes";
+import { IUserWithToken, IUserLogin } from "types/userTypes";
 
 import "./styleForm.scss";
 
@@ -20,7 +20,7 @@ interface IUserData extends IUserLogin {
     rememberMe: boolean
 }
 interface IResponse {
-    userLogin: ITokenResponse
+    userLogin: IUserWithToken
 }
 
 const LoginForm: React.FC = () => {

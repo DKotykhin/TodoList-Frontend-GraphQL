@@ -10,12 +10,12 @@ import { RegisterFormValidation } from "./userFormValidation";
 
 import { useMutation } from '@apollo/client';
 import { USER_REGISTER } from "apollo/mutation/mutateUser";
-import { ITokenResponse, IUserRegister } from "types/userTypes";
+import { IUserWithToken, IUserRegister } from "types/userTypes";
 
 import "./styleForm.scss";
 
 interface IResponse {
-    userRegister: ITokenResponse
+    userRegister: IUserWithToken;
 }
 
 const RegisterForm = () => {

@@ -2,7 +2,12 @@ import { DocumentNode, gql } from "@apollo/client";
 
 export const USER_REGISTER: DocumentNode = gql`
     mutation ($query: UserRegisterInput) {
-        userRegister(registerInput: $query) {            
+        userRegister(registerInput: $query) {
+            _id
+            email
+            name
+            avatarURL
+            createdAt            
             token
             message
         }
@@ -17,6 +22,24 @@ export const USER_UPDATE_NAME: DocumentNode = gql`
             email
             avatarURL
             createdAt
+            message
+        }
+    }
+`;
+
+export const USER_CONFIRM_PASSWORD: DocumentNode = gql`
+    mutation ($password: String!) {
+        userConfirmPassword(password: $password) {
+            status
+            message
+        }
+    }
+`;
+
+export const USER_UPDATE_PASSWORD: DocumentNode = gql`
+    mutation ($password: String!) {
+        userUpdatePassword(password: $password) {
+            status
             message
         }
     }

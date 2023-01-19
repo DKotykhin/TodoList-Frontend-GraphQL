@@ -20,9 +20,8 @@ export interface IUser {
     message: string;
 }
 
-export interface ITokenResponse {
-    token: string;
-    message: string;
+export interface IUserWithToken extends IUser {
+    token: string;    
 }
 
 export interface IPasswordResponse {

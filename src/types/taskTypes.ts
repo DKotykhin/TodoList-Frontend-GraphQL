@@ -37,16 +37,6 @@ export interface ITaskResponse {
     message: string;
 }
 
-export interface ITaskUpdateResponse {
-    status: {
-        matchedCount: number;
-        modifiedCount: number;
-        upsertedId: string;
-        acknowledged: boolean;
-    };
-    message: string;
-}
-
 export interface ITaskDeleteResponse {
     status: {
         deletedCount: number;

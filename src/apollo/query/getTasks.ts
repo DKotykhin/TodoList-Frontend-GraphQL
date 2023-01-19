@@ -1,7 +1,7 @@
 import { DocumentNode, gql } from "@apollo/client";
 
 export const GET_TASKS: DocumentNode = gql`
-    query getTasksQuery($query: TaskParamsInput) {
+    query getTasks($query: TaskParamsInput) {
         getTasks(paramsInput: $query) {
             tasksOnPageQty
             totalPagesQty

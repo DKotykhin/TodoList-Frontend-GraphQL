@@ -9,7 +9,7 @@ import { PasswordField } from "components/userFields";
 import { PasswordFormValidation } from "../userFormValidation";
 
 import { useMutation } from '@apollo/client';
-import { USER_CONFIRM_PASSWORD } from "apollo/mutation/mutatePassword";
+import { USER_CONFIRM_PASSWORD } from "apollo/mutation/mutateUser";
 
 import { IPasswordResponse, IUserUpdate } from "types/userTypes";
 

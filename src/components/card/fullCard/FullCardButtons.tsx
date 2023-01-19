@@ -7,14 +7,14 @@ import { Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { DELETE_TASK, UPDATE_TASK } from 'apollo/mutation/mutateTask';
 
-import { ICompleteTask, ITask, ITaskDeleteResponse, ITaskUpdateResponse, IUpdateTask } from "types/taskTypes";
+import { ICompleteTask, ITask, ITaskDeleteResponse, IUpdateTask } from "types/taskTypes";
 
 interface IFullCardButtons {
     task: ITask;
     closeModal: () => void;
 }
 interface IUpdateResponse {
-    updateTask: ITaskUpdateResponse;
+    updateTask: ITask;
 }
 
 interface IDeleteResponse {
@@ -58,9 +58,9 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
 
     const navigate = useNavigate();
 
-    const handleDelete = (id: string) => {
+    const handleDelete = (_id: string) => {
         closeModal();
-        deleteTask({ variables: { _id: id } });
+        deleteTask({ variables: { _id } });
     };
 
     const handleUpdate = (id: string): void => {
@@ -69,7 +69,8 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
 
     const handleComplete = (data: ITask) => {
         closeModal();
-        const newData: ICompleteTask = { completed: !data.completed, _id: data._id, title: data?.title };
+        const { completed, _id, title } = data;
+        const newData: ICompleteTask = { completed: !completed, _id, title };
         updateTask({ variables: { query: newData } });
     };
 
