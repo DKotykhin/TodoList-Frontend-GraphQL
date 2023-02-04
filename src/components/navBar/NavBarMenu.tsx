@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
 import Typography from "@mui/material/Typography";
-// import client from "apollo/client";
 import { useApolloClient } from "@apollo/client";
 
 import { useAppDispatch } from "store/reduxHooks";
 import { logout } from "store/userSlice";
 
-const settings = ["Profile", "Change password", "Logout"];
+import styles from "./navBar.module.scss";
+
+const menu = ["Profile", "Change password", "Logout"];
 
 const NavBarMenu = () => {    
     const navigate = useNavigate();
@@ -37,18 +38,13 @@ const NavBarMenu = () => {
 
     return (
         <>
-            {settings.map((setting) => (
+            {menu.map((item) => (
                 <Typography
-                    key={setting}
-                    sx={{
-                        padding: "5px 15px",
-                        cursor: "pointer",
-                        color: "#808080",
-                        ":hover": { color: "#2b2b2b" },
-                    }}
-                    onClick={() => handleSettingMenu(setting)}
+                    key={item}
+                    className={styles.navbar__menu}
+                    onClick={() => handleSettingMenu(item)}
                 >
-                    {setting}
+                    {item}
                 </Typography>
             ))}
         </>
