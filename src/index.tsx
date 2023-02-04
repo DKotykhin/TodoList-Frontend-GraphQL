@@ -21,6 +21,18 @@ const theme = createTheme({
             main: "#00a1b6",
         },
     },
+    typography: {
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            'Mulish',
+            'Inter',
+            'Arial',
+            'Segoe UI',
+            'Roboto',
+            'sans-serif'
+        ].join(','),
+    }
 });
 
 const root = ReactDOM.createRoot(

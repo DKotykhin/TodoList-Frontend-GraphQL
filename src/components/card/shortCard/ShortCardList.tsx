@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import ShortCard from "components/card/shortCard/ShortCard";
 import { ITask } from 'types/taskTypes';
 
-import './shortCard.scss';
+import styles from "./shortCard.module.scss";
 
 interface IShortCardList {
     taskdata: ITask[];
@@ -15,9 +15,9 @@ interface IShortCardList {
 const ShortCardList: React.FC<IShortCardList> = ({ taskdata, handleOpenFullCard }) => {
    
     return (
-        <Grid container sx={{ mb: 4 }} className="shortCard">
+        <Grid container sx={{ mb: 4 }}>
             {taskdata.map((task) => (
-                <Grid item xs={12} md={6} xl={4} key={task._id} className="shortCardGrid">
+                <Grid item xs={12} md={6} xl={4} key={task._id} className={styles.shortCard__grid}>
                     <ShortCard
                         task={task}
                         handleOpenFullCard={() => handleOpenFullCard(task._id)}

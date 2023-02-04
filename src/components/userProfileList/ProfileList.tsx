@@ -6,13 +6,13 @@ import { format } from "date-fns";
 
 import { Button, Typography, Container, Paper } from "@mui/material";
 
-import DeleteForm from "../userDeleteForm/DeleteForm";
-import ProfileForm from "../userProfileForm/ProfileForm";
+import DeleteForm from "./deleteForm/DeleteForm";
+import ProfileForm from "./profileForm/ProfileForm";
 
 import { GET_USER_BY_TOKEN } from "apollo/query/getUser";
 import { IUser } from "types/userTypes";
 
-import "./profilelist.scss";
+import styles from "./profileList.module.scss";
 
 interface IResponse {
     getUserByToken: IUser;
@@ -24,9 +24,9 @@ const ProfileList: React.FC = () => {
     const { data } = useQuery<IResponse>(GET_USER_BY_TOKEN);
 
     return (
-        <Container maxWidth="xs" className="profile">
+        <Container maxWidth="xs" className={styles.profile}>
             <Paper elevation={10}>
-                <Typography className="profile title" component="h2">
+                <Typography className={styles.profile__title} component="h2">
                     {data?.getUserByToken.name}
                 </Typography>
                 <Typography sx={{ pb: 1 }}>
