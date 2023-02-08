@@ -30,25 +30,24 @@ const NavBar: React.FC = () => {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl" className={styles.navbar}>
-                <Toolbar disableGutters>
-                    <AssignmentTurnedInIcon sx={{ mr: 1 }} />
-                    <Typography
-                        component={RouterLink}
-                        to={userName ? "/" : "/login"}
-                        className={styles.navbar__logo}
-                    >
-                        TodoList
-                    </Typography>
+            <Container maxWidth="xl" className={styles.navbar__container}>
+                <Toolbar className={styles.navbar__tool}>
+                    <Box className={styles.navbar__flex}>
+                        <AssignmentTurnedInIcon sx={{ mr: 1 }} />
+                        <Typography
+                            component={RouterLink}
+                            to={userName ? "/" : "/login"}
+                            className={styles.navbar__logo}
+                        >
+                            TodoList
+                        </Typography>
+                    </Box>
                     {userName &&
-                        <>
-                            <Typography sx={{ mr: 3 }}>{userName}</Typography>
+                        <Box className={styles.navbar__flex}>
+                            <Typography className={styles.navbar__name}>{userName}</Typography>
                             <Box>
                                 <Tooltip title="Open settings" arrow>
-                                    <IconButton
-                                        onClick={handleOpenUserMenu}
-                                        sx={{ p: 0 }}
-                                    >
+                                    <IconButton onClick={handleOpenUserMenu}>
                                         <Avatar
                                             alt={userName || "TodoList"}
                                             src={userAvatarURL}
@@ -71,15 +70,12 @@ const NavBar: React.FC = () => {
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
                                 >
-                                    <Box
-                                        sx={{ display: "block" }}
-                                        onClick={handleCloseUserMenu}
-                                    >
+                                    <Box onClick={handleCloseUserMenu}>
                                         <NavBarMenu />
                                     </Box>
                                 </Menu>
                             </Box>
-                        </>
+                        </Box>
                     }
                 </Toolbar>
             </Container>
