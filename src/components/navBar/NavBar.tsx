@@ -30,24 +30,22 @@ const NavBar: React.FC = () => {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl" className={styles.navbar__container}>
-                <Toolbar className={styles.navbar__tool}>
-                    <Box className={styles.navbar__flex}>
-                        <AssignmentTurnedInIcon sx={{ mr: 1 }} />
-                        <Typography
-                            component={RouterLink}
-                            to={userName ? "/" : "/login"}
-                            className={styles.navbar__logo}
-                        >
-                            TodoList
-                        </Typography>
-                    </Box>
+            <Container maxWidth="xl" className={styles.navbar}>
+                <Toolbar disableGutters>
+                    <AssignmentTurnedInIcon sx={{ mr: 1 }} />
+                    <Typography
+                        component={RouterLink}
+                        to={userName ? "/" : "/login"}
+                        className={styles.navbar__logo}
+                    >
+                        TodoList
+                    </Typography>
                     {userName &&
-                        <Box className={styles.navbar__flex}>
+                        <>
                             <Typography className={styles.navbar__name}>{userName}</Typography>
                             <Box>
                                 <Tooltip title="Open settings" arrow>
-                                    <IconButton onClick={handleOpenUserMenu}>
+                                    <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
                                         <Avatar
                                             alt={userName || "TodoList"}
                                             src={userAvatarURL}
@@ -75,7 +73,7 @@ const NavBar: React.FC = () => {
                                     </Box>
                                 </Menu>
                             </Box>
-                        </Box>
+                        </>
                     }
                 </Toolbar>
             </Container>

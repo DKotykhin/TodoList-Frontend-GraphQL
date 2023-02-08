@@ -1,32 +1,24 @@
 @import 'constants/constants.scss';
 
-.navbar__container {
-    .navbar__tool {
-        padding: 0;
-        display: flex;
-        justify-content: space-between;
-        .navbar__logo {
-            margin-right: 20px;
-            font-size: 26px;
-            font-weight: 700;
-            font-family: monospace;
-            color: #fff;
-            text-decoration: none;
-        }
-        .navbar__flex {
-            display: flex;
-            align-items: center;
-        }
-        .navbar__name {
-            text-align: center;
-            margin-right: 8px;
-        }
+.navbar {
+    .navbar__logo {
+        margin-right: 20px;
+        font-size: 26px;
+        font-weight: 700;
+        font-family: monospace;
+        color: #fff;
+        text-decoration: none;
+    }
+    .navbar__name {
+        flex-grow: 1;
+        text-align: right;
+        margin-right: 15px;
     }
 }
 .navbar__menu {
+    display: block;
     padding: 5px 15px;
     color: $color_grey;
-    display: block;
     cursor: pointer;
     &:hover {
         color: #2b2b2b;
