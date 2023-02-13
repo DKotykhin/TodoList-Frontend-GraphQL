@@ -1,9 +1,15 @@
 @import 'constants/constants.scss';
 
 .navbar {
+    .navbar__icon {
+        height: 25px;
+        width: 25px;
+        margin-right: 10px;
+        border-radius: 6px;       
+    }
     .navbar__logo {
         margin-right: 20px;
-        font-size: 26px;
+        font-size: 25px;
         font-weight: 700;
         font-family: monospace;
         color: #fff;

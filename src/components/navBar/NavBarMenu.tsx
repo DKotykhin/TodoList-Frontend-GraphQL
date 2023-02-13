@@ -17,13 +17,13 @@ const NavBarMenu = () => {
 
     const handleSettingMenu = (event: string): void => {
         switch (event) {
-            case "Profile":                
+            case menu[0]:                
                 navigate("/profile");
                 break;
-            case "Change password":
+            case menu[1]:
                 navigate("/password");
                 break;
-            case "Logout":                
+            case menu[2]:                
                 dispatch(logout());
                 client.clearStore();
                 client.cache.reset();                
