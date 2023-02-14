@@ -8,6 +8,7 @@ import { Button, Typography, Container, Paper } from "@mui/material";
 
 import DeleteForm from "./deleteForm/DeleteForm";
 import ProfileForm from "./profileForm/ProfileForm";
+import UserStatistic from "./userStatistic/UserStatistic";
 
 import { GET_USER_BY_TOKEN } from "apollo/query/getUser";
 import { IUser } from "types/userTypes";
@@ -25,7 +26,7 @@ const ProfileList: React.FC = () => {
 
     return (
         <Container maxWidth="xs" className={styles.profile}>
-            <Paper elevation={10}>
+            <Paper elevation={10} className={styles.profile__paper}>
                 <Typography className={styles.profile__title} component="h2">
                     {data?.getUserByToken.name}
                 </Typography>
@@ -36,9 +37,10 @@ const ProfileList: React.FC = () => {
                     )}`}
                 </Typography>
             </Paper>
+            <UserStatistic/>
             <ProfileForm user={data?.getUserByToken} />
             <DeleteForm id={data?.getUserByToken._id} />
-            <Button sx={{ m: 6 }} onClick={() => navigate("/")}>
+            <Button className={styles.profile__link} onClick={() => navigate("/")}>
                 Main Page
             </Button>
         </Container>

@@ -14,13 +14,15 @@ import { USER_UPDATE_NAME } from "apollo/mutation/mutateUser";
 
 import { IUser, IUserUpdate } from "types/userTypes";
 
+import styles from "../profileList.module.scss";
+
 const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
-    
+
     const [updateUser, { loading }] = useMutation(USER_UPDATE_NAME, {
         onCompleted: (data) => {
             toast.success(data.userUpdateName.message)
         },
-        onError: (err) => {            
+        onError: (err) => {
             toast.error(err.message);
         }
     });
@@ -36,17 +38,18 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
         reset({ name: user?.name, email: user?.email });
     }, [reset, user?.name, user?.email]);
 
-    const onSubmit = (updateData: IUserUpdate) => {        
+    const onSubmit = (updateData: IUserUpdate) => {
         const { name } = updateData;
-        if (name !== user?.name) {            
+        if (name !== user?.name) {
             updateUser({ variables: { name } });
         } else toast.warn('The same name!');
     };
 
     return (
-        <Paper elevation={10} sx={{ my: 2 }}>
+        <Paper elevation={10} sx={{ my: 2, pb: 1 }}>
             <AvatarUploadForm user={user} />
             <Box
+                className={styles.profile__field}
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
                 noValidate
@@ -64,13 +67,9 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
                         control={control}
                     />
                 </Box>
-                <Button
-                    type="submit"
-                    variant="outlined"
-                    sx={{ m: 3 }}
-                >
+                <Button type="submit">
                     {loading ? 'Loading...' : 'Save name'}
-                </Button>                
+                </Button>
             </Box>
         </Paper>
     )
