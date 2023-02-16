@@ -31,7 +31,7 @@ const RegisterForm = () => {
             reset();
         },
         onError: (err) => {
-            toast.error(err.message)            
+            toast.error(err.message)
         }
     });
 
@@ -54,7 +54,6 @@ const RegisterForm = () => {
                 </Typography>
                 <Avatar className={styles.paper__avatar} />
                 <Box
-                    className={styles.paper__field}
                     component="form"
                     onSubmit={handleSubmit(onSubmit)}
                 >
@@ -73,6 +72,7 @@ const RegisterForm = () => {
                         control={control}
                     />
                     <Button
+                        className={styles.form__submit_button}
                         disabled={!isValid}
                         type="submit"
                     >
@@ -83,7 +83,7 @@ const RegisterForm = () => {
             <Typography className={styles.form__subtitle}>
                 {"Already have account?"}
             </Typography>
-            <Button className={styles.form__submit_button} component={Link} to="/login">
+            <Button className={styles.form__return_button} component={Link} to="/login">
                 {"Login"}
             </Button>
         </Container>

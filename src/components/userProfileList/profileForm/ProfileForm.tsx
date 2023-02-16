@@ -49,7 +49,6 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
         <Paper elevation={10} className={styles.profileForm}>
             <AvatarUploadForm user={user} />
             <Box
-                className={styles.profileForm__field}
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
                 noValidate
@@ -60,14 +59,12 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
                     error={errors.email}
                     control={control}
                 />
-                <Box sx={{ my: 4 }}>
-                    <NameField
-                        label="Change your name"
-                        error={errors.name}
-                        control={control}
-                    />
-                </Box>
-                <Button type="submit">
+                <NameField
+                    label="Change your name"
+                    error={errors.name}
+                    control={control}
+                />
+                <Button type="submit" className={styles.profileForm__submit_button}>
                     {loading ? 'Loading...' : 'Save name'}
                 </Button>
             </Box>
