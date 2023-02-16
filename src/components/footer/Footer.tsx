@@ -8,7 +8,10 @@ import styles from './footer.module.scss';
 const Footer: React.FC = () => {
     return (
         <Box className={styles.footer}>
-            <Container maxWidth='xl'>
+            <Container maxWidth='xl' className={styles.footer__container}>
+                <Typography className={styles.footer__right}>
+                    &copy; All rights reserved
+                </Typography>
                 <Typography className={styles.footer__logo}>
                     TodoList
                 </Typography>

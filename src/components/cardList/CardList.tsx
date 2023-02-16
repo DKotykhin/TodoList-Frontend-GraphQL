@@ -95,34 +95,32 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldValue, A
 
     return !loading ? (
         <Container maxWidth="xl" className={styles.cardList}>
+            <Modal open={cardFullOpen} onClose={cardFullClose}>
+                <>
+                    <FullCard
+                        task={fullCard}
+                        closeModal={cardFullClose}
+                    />
+                </>
+            </Modal>
+            <Typography className={styles.cardList__subtitle}>
+                {data?.getTasks.totalTasksQty
+                    ? `On page: ${data.getTasks.tasksOnPageQty}, total: ${data.getTasks.totalTasksQty}`
+                    : "No cards"}
+            </Typography>
             <Box className={styles.cardList__box}>
-                <Modal open={cardFullOpen} onClose={cardFullClose}>
-                    <>
-                        <FullCard
-                            task={fullCard}
-                            closeModal={cardFullClose}
-                        />
-                    </>
-                </Modal>
-                <Typography className={styles.cardList__subtitle}>
-                    {data?.getTasks.totalTasksQty
-                        ? `On page: ${data.getTasks.tasksOnPageQty}, total: ${data.getTasks.totalTasksQty}`
-                        : "No cards"}
-                </Typography>
                 <ShortCardList taskdata={taskdata} handleOpenFullCard={handleOpenFullCard} />
             </Box>
             <Box className={styles.cardList__taskAmountBox} >
                 <Typography className={styles.cardList__taskAmount} >tasks on page:</Typography>
                 <SelectTaskCount tasksOnPage={tasksOnPage} setTasksOnPage={handleTasksOnPage} />
             </Box>
-            <Box>
-                {data?.getTasks.totalPagesQty ? data.getTasks.totalPagesQty > 1 ?
-                    <PaginationControlled
-                        totalPagesQty={data.getTasks.totalPagesQty}
-                        currentPage={handleCurrentPageNumber}
-                        currentPageNumber={currentPageNumber} /> : null : null
-                }
-            </Box>
+            {data?.getTasks.totalPagesQty ? data.getTasks.totalPagesQty > 1 ?
+                <PaginationControlled
+                    totalPagesQty={data.getTasks.totalPagesQty}
+                    currentPage={handleCurrentPageNumber}
+                    currentPageNumber={currentPageNumber} /> : null : null
+            }
         </Container>
     ) : !!error ? <Navigate to={'/login'} /> : <Spinner />
 }

@@ -1,16 +1,22 @@
 @import "constants/constants.scss";
 
 .footer {
-    height: 64px;
     background-color: $color_mint;
-    display: flex;  
-    justify-content: flex-end;
-    align-items: center;
-    .footer__logo {        
-        text-align: right;
-        font-size: 25px;
-        font-weight: 700;
-        font-family: monospace;
-        color: #ffffff;
+    height: 64px;
+    .footer__container {
+        height: 64px;
+        display: flex;  
+        justify-content: space-between;
+        align-items: center;
+        .footer__right {
+            color: #ffffff; 
+        }
+        .footer__logo {        
+            text-align: right;
+            font-size: 25px;
+            font-weight: 700;
+            font-family: monospace;
+            color: #ffffff;
+        }
     }
 }

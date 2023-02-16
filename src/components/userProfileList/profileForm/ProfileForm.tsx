@@ -14,7 +14,7 @@ import { USER_UPDATE_NAME } from "apollo/mutation/mutateUser";
 
 import { IUser, IUserUpdate } from "types/userTypes";
 
-import styles from "../profileList.module.scss";
+import styles from "./profileForm.module.scss";
 
 const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
 
@@ -46,10 +46,10 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
     };
 
     return (
-        <Paper elevation={10} sx={{ my: 2, pb: 1 }}>
+        <Paper elevation={10} className={styles.profileForm}>
             <AvatarUploadForm user={user} />
             <Box
-                className={styles.profile__field}
+                className={styles.profileForm__field}
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
                 noValidate
