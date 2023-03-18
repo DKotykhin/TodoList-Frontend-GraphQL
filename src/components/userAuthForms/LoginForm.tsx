@@ -60,10 +60,10 @@ const LoginForm: React.FC = () => {
     return (
         <Container maxWidth="xs" className={styles.form}>
             <Paper elevation={10} className={styles.form__paper}>
-                <Typography className={styles.paper__title} component="h2">
+                <Typography className={styles.form__title} component="h2">
                     {"Login"}
                 </Typography>
-                <Avatar className={styles.paper__avatar} />
+                <Avatar className={styles.form__avatar} />
                 <Box
                     component="form"
                     onSubmit={handleSubmit(onSubmit)}
@@ -78,7 +78,7 @@ const LoginForm: React.FC = () => {
                         error={errors.password}
                         control={control}
                     />
-                    <InputLabel className={styles.paper__checkbox}>
+                    <InputLabel className={styles.form__checkbox}>
                         <Controller
                             name="rememberMe"
                             control={control}
