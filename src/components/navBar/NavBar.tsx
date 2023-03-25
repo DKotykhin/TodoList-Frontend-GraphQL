@@ -32,7 +32,7 @@ const NavBar: React.FC = () => {
         <AppBar position="static">
             <Container maxWidth="xl" className={styles.navbar}>
                 <Toolbar disableGutters>
-                <Icon className={styles.navbar__icon} />
+                    <Icon className={styles.navbar__icon} />
                     <Typography
                         component={RouterLink}
                         to={userName ? "/" : "/login"}
