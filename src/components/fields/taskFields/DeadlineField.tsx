@@ -16,7 +16,7 @@ const DeadlineField: React.FC<IDeadlineField> = ({ register, value }) => {
                 Deadline
             </InputLabel>
             <TextField
-                sx={{ ml: 3 }}
+                sx={{ ml: 3, minWidth: '200px' }}
                 {...register("deadline")}
                 type="datetime-local"
                 inputProps={{
