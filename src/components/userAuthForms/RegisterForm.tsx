@@ -43,7 +43,13 @@ const RegisterForm = () => {
     } = useForm<IUserRegister>(RegisterFormValidation);
 
     const onSubmit = (registerData: IUserRegister) => {
-        registerUser({ variables: { query: registerData } })
+        const { name, email, password } = registerData;
+        const validData = {
+            name: name.trim(),
+            email: email.trim(),
+            password: password.trim(),
+        };
+        registerUser({ variables: { query: validData } });
     };
 
     return (

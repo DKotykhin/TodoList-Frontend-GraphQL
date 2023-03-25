@@ -54,7 +54,11 @@ const LoginForm: React.FC = () => {
     const onSubmit = (formdata: IUserData): void => {
         const { email, password, rememberMe } = formdata;
         setRememberMe(rememberMe);
-        fetchLogin({ variables: { email, password } });
+        const validData = {
+            email: email.trim(),
+            password: password.trim(),
+        };
+        fetchLogin({ variables: validData });
     };
 
     return (

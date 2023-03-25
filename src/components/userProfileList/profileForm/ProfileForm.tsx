@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { ProfileFormValidation } from "../../validations/profileFormValidation";
-import AvatarUploadForm from "../avatarForm/AvatarUploadForm";
+import { ProfileFormValidation } from "components/validations/userFormValidation";
 import { EmailField, NameField } from "components/fields/userFields";
+import AvatarUploadForm from "../avatarForm/AvatarUploadForm";
 
 import { useMutation } from '@apollo/client';
 import { USER_UPDATE_NAME } from "apollo/mutation/mutateUser";
@@ -40,8 +40,9 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
 
     const onSubmit = (updateData: IUserUpdate) => {
         const { name } = updateData;
-        if (name !== user?.name) {
-            updateUser({ variables: { name } });
+        const validName = name.trim();
+        if (validName !== user?.name) {
+            updateUser({ variables: { name: validName } });
         } else toast.warn('The same name!');
     };
 
