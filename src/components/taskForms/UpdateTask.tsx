@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
@@ -38,8 +38,10 @@ interface IMutationResponse {
 
 const UpdateTaskComponent: React.FC = () => {
 
+    const [mdeValue, setMdeValue] = useState("");
+    const [singleTask, setSingleTask] = useState<ITask>();
+
     const params = useParams();;
-    const [mdeValue, setMdeValue] = useState("");;
     const navigate = useNavigate();
 
     const { query } = useAppSelector(querySelector);
@@ -47,6 +49,14 @@ const UpdateTaskComponent: React.FC = () => {
     const { data } = useQuery<IQueryResponse>(GET_TASKS, {
         variables: { query }
     });
+
+    useEffect(() => {
+        const currentTask = data?.getTasks.tasks.filter((task: ITask) => task._id === params.taskId);
+        if (currentTask?.length) {
+            setSingleTask(currentTask[0])
+        } else navigate('/');
+
+    }, [data?.getTasks.tasks, navigate, params.taskId]);
 
     const [updateTask, { loading }] = useMutation<IMutationResponse, { query: IUpdateTask }>(UPDATE_TASK, {
         update(cache) {
@@ -69,17 +79,10 @@ const UpdateTaskComponent: React.FC = () => {
         formState: { errors }
     } = useForm<IUpdateForm>(UpdateTaskFormValidation);
 
-    const currentTask = data?.getTasks.tasks ? data.getTasks.tasks.filter((task: ITask) => task._id === params.taskId) : [];
-
-    const { title, subtitle, description, deadline, _id, completed } =
-        currentTask[0];
-
-    const parseDeadline = deadline ? format(new Date(deadline), "yyyy-LL-dd HH:mm") : '';
-
     const onSubmit = (data: IUpdateForm) => {
         const { title, subtitle, deadline, completed } = data;
         const totalData: IUpdateTask = {
-            _id,
+            _id: singleTask?._id || "",
             title,
             subtitle,
             completed,
@@ -96,22 +99,24 @@ const UpdateTaskComponent: React.FC = () => {
     return (
         <Container className={styles.task} maxWidth="sm">
             <Typography className={styles.task__title}>Update Task</Typography>
-            <Box onSubmit={handleSubmit(onSubmit)} component="form">
+            {singleTask &&
+                <Box onSubmit={handleSubmit(onSubmit)} component="form">
 
-                <TitleField register={register} error={errors} value={title} />
-                <SubtitleField register={register} value={subtitle} />
-                <MDEField MDEChange={MDEChange} description={description} />
-                <DeadlineField register={register} value={parseDeadline} />
+                    <TitleField register={register} error={errors} value={singleTask.title} />
+                    <SubtitleField register={register} value={singleTask.subtitle} />
+                    <MDEField MDEChange={MDEChange} description={singleTask.description} />
+                    <DeadlineField register={register} value={format(new Date(singleTask.deadline || ""), "yyyy-LL-dd HH:mm")} />
 
-                <Box className={styles.task__checkbox}>
-                    <Checkbox
-                        {...register("completed")}
-                        defaultChecked={completed}
-                    />
-                    <InputLabel>Completed</InputLabel>
+                    <Box className={styles.task__checkbox}>
+                        <Checkbox
+                            {...register("completed")}
+                            defaultChecked={singleTask.completed}
+                        />
+                        <InputLabel>Completed</InputLabel>
+                    </Box>
+                    <Buttons loading={loading} />
                 </Box>
-                <Buttons loading={loading} />
-            </Box>
+            }
         </Container>
     );
 };
