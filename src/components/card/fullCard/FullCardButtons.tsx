@@ -63,13 +63,15 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
         deleteTask({ variables: { _id } });
     };
 
-    const handleUpdate = (id: string): void => {
-        navigate(`/updatetask/${id}`);
+    const handleUpdate = (task: ITask): void => {
+        if (!task.completed) {
+            navigate(`/updatetask/${task._id}`);
+        } else toast.warn("You can't update completed task!");
     };
 
-    const handleComplete = (data: ITask) => {
+    const handleComplete = (task: ITask) => {
         closeModal();
-        const { completed, _id, title } = data;
+        const { completed, _id, title } = task;
         const newData: ICompleteTask = { completed: !completed, _id, title };
         updateTask({ variables: { query: newData } });
     };
@@ -86,7 +88,7 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
             <Button
                 size="small"
                 color="inherit"
-                onClick={() => handleUpdate(_id)}
+                onClick={() => handleUpdate(task)}
             >
                 Update
             </Button>

@@ -38,7 +38,7 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldValue, A
     const [currentPageNumber, setCurrentPageNumber] = useState(page);
 
     const [cardFullOpen, setCardFullOpen] = useState(false);
-    const [cardFullId, setCardFullId] = useState("");
+    const [currentTask, setCurrentTask] = useState<ITask>();
 
     const dispatch = useAppDispatch();
 
@@ -64,9 +64,7 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldValue, A
     const { data, loading, error } = useQuery<IQueryResponse>(GET_TASKS, {
         variables: { query }
     });
-
     const taskdata = data?.getTasks.tasks ? data.getTasks.tasks : [];
-    const fullCard = taskdata.filter((task: ITask) => task._id === cardFullId)[0];
 
     useEffect(() => {
         dispatch(setQuery({ query }));
@@ -90,9 +88,10 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldValue, A
         setCurrentPageNumber(value);
     };
 
-    const handleOpenFullCard = (data: string): void => {
+    const handleOpenFullCard = (id: string): void => {
+        const fullCard = taskdata.find((task: ITask) => task._id === id);
         setCardFullOpen(true);
-        setCardFullId(data);
+        setCurrentTask(fullCard);
     };
 
     const cardFullClose = (): void => {
@@ -104,7 +103,7 @@ const CardList: React.FC<ICardListNew> = ({ tabIndex, searchQuery, fieldValue, A
             <Modal open={cardFullOpen} onClose={cardFullClose}>
                 <>
                     <FullCard
-                        task={fullCard}
+                        task={currentTask}
                         closeModal={cardFullClose}
                     />
                 </>

@@ -41,7 +41,7 @@ const UpdateTaskComponent: React.FC = () => {
     const [mdeValue, setMdeValue] = useState("");
     const [singleTask, setSingleTask] = useState<ITask>();
 
-    const params = useParams();;
+    const { taskId } = useParams();;
     const navigate = useNavigate();
 
     const { query } = useAppSelector(querySelector);
@@ -51,9 +51,9 @@ const UpdateTaskComponent: React.FC = () => {
     });
 
     useEffect(() => {
-        const currentTask = data?.getTasks.tasks.filter((task: ITask) => task._id === params.taskId);
+        const currentTask = data?.getTasks.tasks.filter((task: ITask) => task._id === taskId);
         if (currentTask?.length) setSingleTask(currentTask[0]);
-    }, [data?.getTasks.tasks, navigate, params.taskId]);
+    }, [data?.getTasks.tasks, navigate, taskId]);
 
     const [updateTask, { loading }] = useMutation<IMutationResponse, { query: IUpdateTask }>(UPDATE_TASK, {
         update(cache) {
