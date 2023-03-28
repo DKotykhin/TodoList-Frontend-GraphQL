@@ -9,16 +9,16 @@ import ProfilePage from "pages/ProfilePage";
 import RegistrationPage from "pages/RegistrationPage";
 import Page404 from "pages/Page404";
 import ChangePasswordPage from "pages/ChangePasswordPage";
-import UpdateTask from "pages/UpdateTaskPage";
-import AddTask from "pages/AddTaskPage";
+import UpdateTaskPage from "pages/UpdateTaskPage";
+import AddTaskPage from "pages/AddTaskPage";
 
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<Layout />}>
             <Route index element={<RequireAuth children={<HomePage />} />} />
-            <Route path="addtask" element={<RequireAuth children={<AddTask />} />} />
-            <Route path="updatetask/:taskId" element={<RequireAuth children={<UpdateTask />} />} />
+            <Route path="addtask" element={<RequireAuth children={<AddTaskPage />} />} />
+            <Route path="updatetask/:taskId" element={<RequireAuth children={<UpdateTaskPage />} />} />
             <Route path="profile" element={<RequireAuth children={<ProfilePage />} />} />
             <Route path="password" element={<RequireAuth children={<ChangePasswordPage />} />} />
             <Route path="registration" element={<RegistrationPage />} />

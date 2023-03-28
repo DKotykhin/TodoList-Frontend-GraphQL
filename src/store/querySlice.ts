@@ -11,10 +11,10 @@ const initialState: IQuerySlise = {
         limit: 6,
         page: 1,
         tabKey: 0,
-        sortField: 'createdAt',
-        sortOrder: -1,
-        search: ''
-    }
+        sortField: "createdAt",
+        sortOrder: 1,
+        search: "",
+    },
 };
 
 const QuerySlice = createSlice({
