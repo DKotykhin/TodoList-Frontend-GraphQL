@@ -163,7 +163,7 @@ const HomePageList: React.FC = () => {
                 </Box>
                 <Box>
                     <SelectTaskCount tasksOnPage={tasksOnPage} setTasksOnPage={handleTasksOnPage} />
-                    {data?.getTasks.totalPagesQty &&
+                    {data &&
                         <PaginationControlled
                             totalPagesQty={data.getTasks.totalPagesQty}
                             currentPage={handleCurrentPageNumber}

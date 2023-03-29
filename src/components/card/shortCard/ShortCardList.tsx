@@ -8,15 +8,15 @@ import { ITask } from 'types/taskTypes';
 import styles from "./shortCard.module.scss";
 
 interface IShortCardList {
-    taskdata: ITask[];
+    taskdata?: ITask[];
     handleOpenFullCard: (arg0: string) => void;
 };
 
 const ShortCardList: React.FC<IShortCardList> = ({ taskdata, handleOpenFullCard }) => {
-   
+
     return (
         <Grid container sx={{ mb: 4 }}>
-            {taskdata.map((task) => (
+            {taskdata?.map((task) => (
                 <Grid item xs={12} md={6} xl={4} key={task._id} className={styles.shortCard__grid}>
                     <ShortCard
                         task={task}

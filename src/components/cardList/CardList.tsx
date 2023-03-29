@@ -15,13 +15,11 @@ interface ICardList {
 
 const CardList: React.FC<ICardList> = ({ taskdata }) => {
 
-    const taskDefinedData = taskdata?.tasks ? taskdata.tasks : [];
-
     const [cardFullOpen, setCardFullOpen] = useState(false);
     const [currentTask, setCurrentTask] = useState<ITask>();
 
     const handleOpenFullCard = (id: string): void => {
-        const fullCard = taskDefinedData.find((task: ITask) => task._id === id);
+        const fullCard = taskdata?.tasks.find((task: ITask) => task._id === id);
         setCardFullOpen(true);
         setCurrentTask(fullCard);
     };
@@ -46,8 +44,8 @@ const CardList: React.FC<ICardList> = ({ taskdata }) => {
                     : "No cards"}
             </Typography>
             <Box className={styles.cardList__box}>
-                <ShortCardList taskdata={taskDefinedData} handleOpenFullCard={handleOpenFullCard} />
-            </Box>            
+                <ShortCardList taskdata={taskdata?.tasks} handleOpenFullCard={handleOpenFullCard} />
+            </Box>
         </Container>
     )
 }
