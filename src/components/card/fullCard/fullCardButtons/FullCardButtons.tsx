@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 import { Button } from "@mui/material";
+
+import ChildModal from "components/childModal/ChildModal";
 
 import { useMutation } from "@apollo/client";
 import { DELETE_TASK, UPDATE_TASK } from 'apollo/mutation/mutateTask';
@@ -23,6 +25,8 @@ interface IDeleteResponse {
 
 const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
     const { _id, completed } = task;
+
+    const [openChildModal, setOpenChildModal] = useState(false);
 
     const [updateTask, { loading }] = useMutation<IUpdateResponse, { query: IUpdateTask }>(UPDATE_TASK, {
         update(cache) {
@@ -59,13 +63,12 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
     const navigate = useNavigate();
 
     const handleDelete = (_id: string) => {
-        closeModal();
-        deleteTask({ variables: { _id } });
+        setOpenChildModal(true);
     };
 
-    const handleUpdate = (task: ITask): void => {
+    const handleUpdate = (id: string): void => {
         if (!task.completed) {
-            navigate(`/updatetask/${task._id}`);
+            navigate(`/updatetask/${id}`);
         } else toast.warn("You can't update completed task!");
     };
 
@@ -74,6 +77,15 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
         const { completed, _id, title } = task;
         const newData: ICompleteTask = { completed: !completed, _id, title };
         updateTask({ variables: { query: newData } });
+    };
+
+    const handleClose = (): void => {
+        setOpenChildModal(false);
+    };
+    const handleSubmit = (): void => {
+        setOpenChildModal(false);
+        closeModal();
+        deleteTask({ variables: { _id } });
     };
 
     return (
@@ -88,7 +100,7 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
             <Button
                 size="small"
                 color="inherit"
-                onClick={() => handleUpdate(task)}
+                onClick={() => handleUpdate(_id)}
             >
                 Update
             </Button>
@@ -99,6 +111,12 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
                         ? "Undo Complete"
                         : "Complete"}
             </Button>
+            <ChildModal
+                open={openChildModal}
+                handleClose={handleClose}
+                handleSubmit={handleSubmit}
+                title={'task'}
+            />
         </>
     );
 };

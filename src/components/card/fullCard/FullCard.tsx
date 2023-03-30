@@ -15,7 +15,7 @@ import SubtitlesOutlinedIcon from "@mui/icons-material/SubtitlesOutlined";
 
 import CardTime from "../CardTime";
 import CardTitle from "../CardTitle";
-import FullCardButtons from "./FullCardButtons";
+import FullCardButtons from "./fullCardButtons/FullCardButtons";
 import { ITask } from "types/taskTypes";
 
 import styles from "./fullCard.module.scss";

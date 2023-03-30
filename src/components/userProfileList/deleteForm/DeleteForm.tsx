@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 import { Typography, Paper } from "@mui/material";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-import DeleteDialog from "../deleteDialog/DeleteDialog";
+import ChildModal from "components/childModal/ChildModal";
 
 import client from "apollo/client";
 import { useMutation } from '@apollo/client';
@@ -22,6 +23,8 @@ interface IResponse {
 }
 
 const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
+
+    const [openChildModal, setOpenChildModal] = useState(false);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -41,8 +44,16 @@ const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
         }
     })
 
-    const handleDelete = () => {
+    const handleSubmit = () => {
         deleteUser({ variables: { _id: id } });
+        setOpenChildModal(false);
+    };
+
+    const handleClick = (): void => {
+        setOpenChildModal(true);
+    };
+    const handleClose = (): void => {
+        setOpenChildModal(false);
     };
 
     return (
@@ -50,9 +61,12 @@ const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
             <Typography className={styles.deleteForm__title}>
                 {loading ? 'Deleting...' : 'Need to delete Profile?'}
             </Typography>
-            <DeleteDialog
-                dialogTitle={"You really want to delete user?"}
-                deleteAction={handleDelete}
+            <DeleteForeverIcon onClick={handleClick} className={styles.deleteForm__icon} />
+            <ChildModal
+                open={openChildModal}
+                handleClose={handleClose}
+                handleSubmit={handleSubmit}
+                title={'user'}
             />
         </Paper>
     )
