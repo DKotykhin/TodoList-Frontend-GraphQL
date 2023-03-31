@@ -11,6 +11,7 @@ export interface IUpdateTask extends IAddTask {
 }
 export interface ITask extends IUpdateTask {
     createdAt: string;
+    updatedAt: string;
     message: string;
 }
 
