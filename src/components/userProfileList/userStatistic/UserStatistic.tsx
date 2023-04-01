@@ -19,48 +19,62 @@ const UserStatistic: React.FC = () => {
 
     return (
         <Paper elevation={10} className={styles.statistic}>
-            <Typography className={styles.title}>
-                {loading ? "Loading..." : "Your statistic:"}
-            </Typography>
-            {data?.getStatistic.totalTasks ?
-                <Box className={styles.subtitle}>
-                    <Box className={styles.box}>
-                        <Typography>
-                            {"Total tasks:"}
+            {loading ?
+                <Typography className={styles.title}>
+                    {"Loading..."}
+                </Typography> :
+                <>
+                    <Typography className={styles.title}>
+                        {"Your statistic:"}
+                    </Typography>
+                    {data?.getStatistic.totalTasks ?
+                        <Box className={styles.subtitle}>
+                            <Box className={styles.box}>
+                                <Typography>
+                                    {"Total tasks:"}
+                                </Typography>
+                                <Typography>
+                                    {data.getStatistic.totalTasks}
+                                </Typography>
+                            </Box>
+                            <Box className={styles.box}>
+                                <Typography>
+                                    {"Active tasks:"}
+                                </Typography>
+                                <Typography>
+                                    {data.getStatistic.activeTasks}
+                                </Typography>
+                            </Box>
+                            <Box
+                                className={styles.box}
+                                sx={data.getStatistic.overdueTasks ? { color: '#ff0000' } : null}
+                            >
+                                <Typography>
+                                    {"Overdue tasks:"}
+                                </Typography>
+                                <Typography>
+                                    {data.getStatistic.overdueTasks}
+                                </Typography>
+                            </Box>
+                            <Box
+                                className={styles.box}
+                                sx={data.getStatistic.completedTasks ? { color: '#00a1b6' } : null}
+                            >
+                                <Typography>
+                                    {"Completed tasks:"}
+                                </Typography>
+                                <Typography>
+                                    {data.getStatistic.completedTasks}
+                                </Typography>
+                            </Box>
+                        </Box>
+                        :
+                        <Typography className={styles.text}>
+                            {"You don't have any task..."}
                         </Typography>
-                        <Typography>
-                            {data?.getStatistic.totalTasks}
-                        </Typography>
-                    </Box>
-                    <Box className={styles.box}>
-                        <Typography>
-                            {"Active tasks:"}
-                        </Typography>
-                        <Typography>
-                            {data?.getStatistic.activeTasks}
-                        </Typography>
-                    </Box>
-                    <Box className={styles.box}>
-                        <Typography>
-                            {"Completed tasks:"}
-                        </Typography>
-                        <Typography>
-                            {data?.getStatistic.completedTasks}
-                        </Typography>
-                    </Box>
-                    <Box className={styles.box} sx={data?.getStatistic.overdueTasks ? { color: '#ff0000' } : null}>
-                        <Typography>
-                            {"Overdue tasks:"}
-                        </Typography>
-                        <Typography>
-                            {data?.getStatistic.overdueTasks}
-                        </Typography>
-                    </Box>
-                </Box>
-                :
-                <Typography className={styles.text}>
-                    {"You don't have any task..."}
-                </Typography>}
+                    }
+                </>
+            }
         </Paper>
     )
 }

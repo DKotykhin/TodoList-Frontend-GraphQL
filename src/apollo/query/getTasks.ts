@@ -15,6 +15,7 @@ export const GET_TASKS: DocumentNode = gql`
                 deadline
                 createdAt
                 updatedAt
+                completedAt
             }
         }
     }

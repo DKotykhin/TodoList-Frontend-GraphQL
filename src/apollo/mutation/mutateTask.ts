@@ -24,7 +24,8 @@ export const UPDATE_TASK: DocumentNode = gql`
             description
             completed
             deadline
-            createdAt            
+            createdAt
+            completedAt            
             message
         }
     }
