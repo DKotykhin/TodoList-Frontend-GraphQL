@@ -8,8 +8,8 @@ Full stack application
 
 ## Technologies
 
--   Backend: Node JS, Express JS, GraphQL, Mongoose, Multer, Yup, JWT
--   Frontend: React, GraphQL, Apollo, Typescript, React Hook Form, MUI, Markdown, Tostify, SCSS
+-   Backend: Node JS, Apollo, GraphQL, Express, Mongoose, Multer, Yup, JWT, Nodemailer, Sharp, Bcrypt
+-   Frontend: React, GraphQL, Apollo, Typescript, React Hook Form, Material UI, React Markdown, React Tostify, Date-fns, Yup, SCSS
 -   Database: Mongo DB
 
 ## Features
