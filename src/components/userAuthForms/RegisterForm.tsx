@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
@@ -14,15 +15,15 @@ import { IUserWithToken, IUserRegister } from "types/userTypes";
 
 import styles from "./form.module.scss";
 
-interface IResponse {
+interface IRegisterForm {
     userRegister: IUserWithToken;
 }
 
-const RegisterForm = () => {
+const RegisterForm: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const [registerUser, { loading }] = useMutation<IResponse, { query: IUserRegister }>(USER_REGISTER, {
+    const [registerUser, { loading }] = useMutation<IRegisterForm, { query: IUserRegister }>(USER_REGISTER, {
         onCompleted: (data) => {
             const { token, message } = data.userRegister;
             console.log(message);

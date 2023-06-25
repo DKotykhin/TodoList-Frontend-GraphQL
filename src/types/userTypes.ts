@@ -29,6 +29,11 @@ export interface IPasswordResponse {
     message: string;
 }
 
+export interface IResetPasswordResponse {
+    status: string;
+    message: string;
+}
+
 export interface IAvatarResponse {
     avatarURL: string;
     message: string;

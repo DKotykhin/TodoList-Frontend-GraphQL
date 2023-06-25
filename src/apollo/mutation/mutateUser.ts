@@ -7,7 +7,7 @@ export const USER_REGISTER: DocumentNode = gql`
             email
             name
             avatarURL
-            createdAt            
+            createdAt
             token
             message
         }
@@ -39,6 +39,24 @@ export const USER_CONFIRM_PASSWORD: DocumentNode = gql`
 export const USER_UPDATE_PASSWORD: DocumentNode = gql`
     mutation ($password: String!) {
         userUpdatePassword(password: $password) {
+            status
+            message
+        }
+    }
+`;
+
+export const USER_RESET_PASSWORD: DocumentNode = gql`
+    mutation UserResetPassword($email: String!) {
+        userResetPassword(email: $email) {
+            status
+            message
+        }
+    }
+`;
+
+export const USER_SET_NEW_PASSWORD: DocumentNode = gql`
+    mutation UserSetNewPassword($query: UserSetPasswordInput) {
+        userSetNewPassword(setPasswordInput: $query) {
             status
             message
         }
