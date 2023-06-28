@@ -44,7 +44,7 @@ const ProfileList: React.FC = () => {
                 Main Page
             </Button>
         </Container>
-    )
+    );
 };
 
 export default ProfileList;

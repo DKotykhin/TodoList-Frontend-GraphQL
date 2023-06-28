@@ -13,7 +13,7 @@ const ProfilePage: React.FC = () => {
             </Helmet>
             <ProfileList />
         </>
-    )
+    );
 };
 
-export default ProfilePage;
+export { ProfilePage };

@@ -13,7 +13,7 @@ const UpdateTaskPage: React.FC = () => {
             </Helmet>
             <UpdateTaskComponent />
         </>
-    )
+    );
 };
 
-export default UpdateTaskPage;
+export { UpdateTaskPage };

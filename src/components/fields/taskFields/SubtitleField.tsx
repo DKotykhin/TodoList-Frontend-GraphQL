@@ -21,7 +21,7 @@ const SubtitleField: React.FC<ISubtitleField> = ({ register, value }) => {
                 defaultValue={value}
             />
         </Paper>
-    )
-}
+    );
+};
 
-export default SubtitleField;
+export { SubtitleField };

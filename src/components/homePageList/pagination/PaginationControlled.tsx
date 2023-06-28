@@ -13,7 +13,7 @@ const PaginationControlled: React.FC<IPaginationControlled> =
     ({ totalPagesQty, currentPageNumber, currentPage }) => {
 
         const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-            currentPage(value)
+            currentPage(value);
         };
 
         return totalPagesQty > 1 ? (
@@ -30,6 +30,6 @@ const PaginationControlled: React.FC<IPaginationControlled> =
                     color="primary" />
             </Stack>
         ) : null;
-    }
+    };
 
 export default PaginationControlled;

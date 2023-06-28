@@ -70,4 +70,4 @@ const PasswordField: React.FC<IPasswordField> = (props) => {
     );
 };
 
-export default PasswordField;
+export { PasswordField };

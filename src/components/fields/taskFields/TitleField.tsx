@@ -25,7 +25,7 @@ const TitleField: React.FC<ITitleField> = ({ register, error, value }) => {
                 autoFocus
             />
         </Paper>
-    )
-}
+    );
+};
 
-export default TitleField;
+export { TitleField };

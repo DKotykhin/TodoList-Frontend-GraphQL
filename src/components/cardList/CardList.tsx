@@ -47,7 +47,7 @@ const CardList: React.FC<ICardList> = ({ taskdata }) => {
                 <ShortCardList taskdata={taskdata?.tasks} handleOpenFullCard={handleOpenFullCard} />
             </Box>
         </Container>
-    )
-}
+    );
+};
 
 export default CardList;

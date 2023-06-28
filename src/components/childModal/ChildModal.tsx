@@ -37,6 +37,6 @@ const ChildModal: React.FC<IChildModal> = ({ open, handleClose, handleSubmit, ti
             </Box>
         </Modal>
     );
-}
+};
 
 export default ChildModal;

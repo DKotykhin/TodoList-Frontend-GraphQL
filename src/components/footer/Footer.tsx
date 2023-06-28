@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
                 </Typography>
             </Container>
         </Box>
-    )
-}
+    );
+};
 
 export default Footer;

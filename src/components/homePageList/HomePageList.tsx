@@ -84,7 +84,7 @@ const HomePageList: React.FC = () => {
         const delayDebounceFn = setTimeout(() => {
             setSearchQuery(searchTerm);
         }, 300);
-        return () => clearTimeout(delayDebounceFn)
+        return () => clearTimeout(delayDebounceFn);
     }, [searchTerm]);
 
     const handleChangeTab = (event: React.SyntheticEvent, newValue: number): void => {

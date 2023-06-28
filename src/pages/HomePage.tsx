@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
             </Helmet>
             <HomePageList />
         </>
-    )
+    );
 };
 
-export default HomePage;
+export { HomePage };

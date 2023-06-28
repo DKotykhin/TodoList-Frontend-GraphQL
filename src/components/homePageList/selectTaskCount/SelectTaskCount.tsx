@@ -32,6 +32,6 @@ const SelectTaskCount: React.FC<ISelectTaskCount> = ({ tasksOnPage, setTasksOnPa
             </FormControl>
         </Box>
     );
-}
+};
 
 export default SelectTaskCount;

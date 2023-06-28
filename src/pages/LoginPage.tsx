@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
             </Helmet>
             <LoginForm />
         </>
-    )
-}
+    );
+};
 
-export default LoginPage;
+export { LoginPage };

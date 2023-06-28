@@ -40,4 +40,4 @@ const NameField: React.FC<INameField> = ({ label, error, control }) => {
     );
 };
 
-export default NameField;
+export { NameField };

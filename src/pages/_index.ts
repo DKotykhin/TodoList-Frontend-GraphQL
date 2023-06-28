@@ -1,0 +1,10 @@
+export { AddTaskPage } from "./AddTaskPage";
+export { ChangePasswordPage } from "./ChangePasswordPage";
+export { HomePage } from "./HomePage";
+export { LoginPage } from "./LoginPage";
+export { Page404 } from "./Page404";
+export { ProfilePage } from "./ProfilePage";
+export { RegistrationPage } from "./RegistrationPage";
+export { ResetPasswordPage } from "./ResetPasswordPage";
+export { SetNewPasswordPage } from "./SetNewPasswordPage";
+export { UpdateTaskPage } from "./UpdateTaskPage";

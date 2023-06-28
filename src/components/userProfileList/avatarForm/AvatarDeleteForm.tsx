@@ -27,7 +27,7 @@ const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 fields: {
                     getUserByToken() { }
                 }
-            })
+            });
         },
         onCompleted: (data) => toast.success(data.deleteAvatar.message),
         onError: (err) => toast.error(err.message)
@@ -65,7 +65,7 @@ const AvatarDeleteForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 title={'avatar'}
             />
         </>
-    )
-}
+    );
+};
 
 export default AvatarDeleteForm;

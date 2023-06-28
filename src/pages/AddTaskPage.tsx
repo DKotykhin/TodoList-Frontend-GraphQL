@@ -13,7 +13,7 @@ const AddTaskPage: React.FC = () => {
             </Helmet>
             <AddTaskComponent />
         </>
-    )
+    );
 };
 
-export default AddTaskPage;
+export { AddTaskPage };

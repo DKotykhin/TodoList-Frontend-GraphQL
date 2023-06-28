@@ -9,7 +9,7 @@ import { Container, Typography, InputLabel, Checkbox } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { UpdateTaskFormValidation } from "../validations/taskFormValidation";
-import { TitleField, MDEField, SubtitleField, DeadlineField } from "../fields/taskFields";
+import { TitleField, MDEField, SubtitleField, DeadlineField } from "../fields/taskFields/_index";
 import Buttons from "./buttons/Buttons";
 
 import { useMutation, useQuery } from "@apollo/client";
@@ -61,11 +61,11 @@ const UpdateTaskComponent: React.FC = () => {
                 fields: {
                     getTasks() { }
                 }
-            })
+            });
         },
         onCompleted: (data) => {
-            toast.success(data.updateTask.message)
-            navigate("/", { replace: true })
+            toast.success(data.updateTask.message);
+            navigate("/", { replace: true });
         },
         onError: (err) => toast.error(err.message)
     });
@@ -86,7 +86,7 @@ const UpdateTaskComponent: React.FC = () => {
             description: mdeValue,
             ...(deadline && { deadline: new Date(deadline).toJSON() }),
         };
-        updateTask({ variables: { query: totalData } })
+        updateTask({ variables: { query: totalData } });
     };
 
     const MDEChange = useCallback((data: string) => {

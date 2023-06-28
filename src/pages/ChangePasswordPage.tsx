@@ -13,7 +13,7 @@ const ChangePasswordPage: React.FC = () => {
             </Helmet>
             <PasswordForm />
         </>
-    )
+    );
 };
 
-export default ChangePasswordPage;
+export { ChangePasswordPage };

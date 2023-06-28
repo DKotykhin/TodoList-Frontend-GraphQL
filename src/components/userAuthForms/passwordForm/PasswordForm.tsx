@@ -15,7 +15,7 @@ const PasswordForm: React.FC = () => {
 
     const confirmStatus = (data: boolean): void => {
         setConfirmPassword(data);
-    }
+    };
 
     return (
         <Container maxWidth="sm" className={styles.form}>
@@ -28,7 +28,7 @@ const PasswordForm: React.FC = () => {
                 Main Page
             </Button>
         </Container>
-    )
-}
+    );
+};
 
 export default PasswordForm;

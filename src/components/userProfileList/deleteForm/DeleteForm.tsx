@@ -42,7 +42,7 @@ const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
         onError: (err) => {
             toast.error(err.message);
         }
-    })
+    });
 
     const handleSubmit = () => {
         deleteUser({ variables: { _id: id } });
@@ -69,7 +69,7 @@ const DeleteForm: React.FC<{ id?: string }> = ({ id }) => {
                 title={'user'}
             />
         </Paper>
-    )
-}
+    );
+};
 
 export default DeleteForm;

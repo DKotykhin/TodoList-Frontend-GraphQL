@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { PasswordField } from "components/fields/userFields";
+import { PasswordField } from "components/fields/userFields/_index";
 import { PasswordFormValidation } from "../../validations/userFormValidation";
 
 import { useMutation } from '@apollo/client';
@@ -33,7 +33,7 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
             const { status, message } = data.userConfirmPassword;
             console.log(message);
             if (status) {
-                confirmStatus(status)
+                confirmStatus(status);
             } else {
                 toast.error(message);
             }
@@ -77,7 +77,7 @@ const ConfirmPassword: React.FC<IConfirmPassword> = ({ confirmStatus }) => {
                 </Button>
             </Box>
         </>
-    )
-}
+    );
+};
 
 export default ConfirmPassword;

@@ -12,7 +12,7 @@ const ResetPasswordPage: React.FC = () => {
             </Helmet>
             <ResetPasswordForm />
         </>
-    )
-}
+    );
+};
 
-export default ResetPasswordPage;
+export { ResetPasswordPage };

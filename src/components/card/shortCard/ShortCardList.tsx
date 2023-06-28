@@ -25,7 +25,7 @@ const ShortCardList: React.FC<IShortCardList> = ({ taskdata, handleOpenFullCard 
                 </Grid>
             ))}
         </Grid>
-    )
+    );
 };
 
 export default ShortCardList;

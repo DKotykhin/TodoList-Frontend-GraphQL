@@ -13,7 +13,7 @@ const RegistrationPage: React.FC = () => {
             </Helmet>
             <RegisterForm />
         </>
-    )
-}
+    );
+};
 
-export default RegistrationPage;
+export { RegistrationPage };

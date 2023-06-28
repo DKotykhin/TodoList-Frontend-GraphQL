@@ -26,7 +26,7 @@ const DeadlineField: React.FC<IDeadlineField> = ({ register, value }) => {
                 defaultValue={value}
             />
         </Box>
-    )
-}
+    );
+};
 
-export default DeadlineField;
+export { DeadlineField };

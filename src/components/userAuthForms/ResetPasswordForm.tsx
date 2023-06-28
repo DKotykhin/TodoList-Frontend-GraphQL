@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { Button, Container, Typography, Box, Avatar, Paper } from "@mui/material";
 
-import { EmailField } from "components/fields/userFields";
+import { EmailField } from "components/fields/userFields/_index";
 import { ResetPasswordFormValidation } from 'components/validations/userFormValidation';
 
 import { useMutation } from '@apollo/client';
@@ -31,7 +31,7 @@ const ResetPasswordForm: React.FC = () => {
             reset();
         },
         onError: (err) => {
-            toast.error(err.message)
+            toast.error(err.message);
         }
     });
 
@@ -86,7 +86,7 @@ const ResetPasswordForm: React.FC = () => {
                 Registration
             </Button>
         </Container>
-    )
-}
+    );
+};
 
 export default ResetPasswordForm;

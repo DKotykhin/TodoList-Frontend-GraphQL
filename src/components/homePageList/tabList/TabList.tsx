@@ -56,7 +56,7 @@ const TabList: React.FC<ITabList> = ({ tabIndex, taskdata }) => {
                 <CardList taskdata={taskdata} />
             </TabPanel>
         </>
-    )
+    );
 };
 
 export default TabList;

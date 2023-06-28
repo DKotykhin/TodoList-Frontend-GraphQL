@@ -29,7 +29,7 @@ const Buttons: React.FC<IButtons> = ({ loading }) => {
                 {loading ? "Loading..." : "Submit"}
             </Button>
         </Box>
-    )
-}
+    );
+};
 
 export default Buttons;

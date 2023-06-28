@@ -39,15 +39,15 @@ const AvatarUploadForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 fields: {
                     getUserByToken() { }
                 }
-            })
+            });
         },
         onCompleted: (data) => {
-            console.log(data.uploadAvatar.message)
+            console.log(data.uploadAvatar.message);
         },
         onError: (err) => {
-            toast.error(err.message)
+            toast.error(err.message);
         }
-    })
+    });
 
     const onChange = (e: any) => {
         setFileName(e.target.files[0].name);
@@ -78,7 +78,7 @@ const AvatarUploadForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 })
                 .catch((error) => {
                     toast.error(error.response.data.message || error.message);
-                })
+                });
         } else {
             toast.warn("No File in Avatar Field");
         }
@@ -127,7 +127,7 @@ const AvatarUploadForm: React.FC<{ user?: IUser }> = ({ user }) => {
                 ) : <AvatarDeleteForm user={user} />
             }
         </Box>
-    )
-}
+    );
+};
 
 export default AvatarUploadForm;

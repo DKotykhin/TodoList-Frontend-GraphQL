@@ -28,7 +28,7 @@ const EmailField: React.FC<IEmailField> = ({ disabled, error, control }) => {
                     render={({ field }) => (
                         <Input
                             {...field}
-                            type="email"                            
+                            type="email"
                             disabled={disabled}
                             placeholder="type email..."
                             autoComplete="email"
@@ -42,4 +42,4 @@ const EmailField: React.FC<IEmailField> = ({ disabled, error, control }) => {
     );
 };
 
-export default EmailField;
+export { EmailField };

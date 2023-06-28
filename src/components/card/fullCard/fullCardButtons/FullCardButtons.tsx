@@ -34,10 +34,10 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
                 fields: {
                     getTasks() { }
                 }
-            })
+            });
         },
         onCompleted: (data) => {
-            toast.success(data.updateTask.message)
+            toast.success(data.updateTask.message);
         },
         onError: (err) => {
             toast.error(err.message);
@@ -50,10 +50,10 @@ const FullCardButtons: React.FC<IFullCardButtons> = ({ task, closeModal }) => {
                 fields: {
                     getTasks() { }
                 }
-            })
+            });
         },
         onCompleted: (data) => {
-            toast.success(data.deleteTask.message)
+            toast.success(data.deleteTask.message);
         },
         onError: (err) => {
             toast.error(err.message);

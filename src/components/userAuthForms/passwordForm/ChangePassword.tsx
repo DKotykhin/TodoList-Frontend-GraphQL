@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { PasswordField } from "components/fields/userFields";
+import { PasswordField } from "components/fields/userFields/_index";
 import { NewPasswordFormValidation } from "../../validations/userFormValidation";
 
 import { useMutation } from '@apollo/client';
@@ -84,6 +84,6 @@ const ChangePassword: React.FC = () => {
             </Button>
         </Box>
     );
-}
+};
 
 export default ChangePassword;
