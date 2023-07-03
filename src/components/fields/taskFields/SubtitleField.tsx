@@ -1,10 +1,11 @@
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 import { Paper, TextField, InputLabel } from "@mui/material";
 
 interface ISubtitleField {
-    register: any;
-    value: string | undefined;
+    register: UseFormRegister<any>;
+    value?: string;
 }
 
 const SubtitleField: React.FC<ISubtitleField> = ({ register, value }) => {

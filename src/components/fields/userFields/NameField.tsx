@@ -1,5 +1,4 @@
-
-import { Controller } from "react-hook-form";
+import { Control, Controller, FieldError } from "react-hook-form";
 
 import {
     Box,
@@ -12,8 +11,8 @@ import {
 import styles from './field.module.scss';
 interface INameField {
     label: string;
-    error: any;
-    control: any;
+    error?: FieldError;
+    control: Control<any>;
 }
 
 const NameField: React.FC<INameField> = ({ label, error, control }) => {

@@ -5,14 +5,14 @@ import { toast } from 'react-toastify';
 import { Button, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { ProfileFormValidation } from "components/validations/userFormValidation";
+import { ProfileFormValidation } from "validations/userFormValidation";
 import { EmailField, NameField } from "components/fields/userFields/_index";
 import AvatarUploadForm from "../avatarForm/AvatarUploadForm";
 
 import { useMutation } from '@apollo/client';
 import { USER_UPDATE_NAME } from "apollo/mutation/mutateUser";
 
-import { IUser, IUserUpdate } from "types/userTypes";
+import { IUser, IUserProfileForm } from "types/userTypes";
 
 import styles from "./profileForm.module.scss";
 
@@ -32,13 +32,13 @@ const ProfileForm: React.FC<{ user?: IUser }> = ({ user }) => {
         reset,
         handleSubmit,
         formState: { errors },
-    } = useForm(ProfileFormValidation);
+    } = useForm<IUserProfileForm>(ProfileFormValidation);
 
     useEffect(() => {
         reset({ name: user?.name, email: user?.email });
     }, [reset, user?.name, user?.email]);
 
-    const onSubmit = (updateData: IUserUpdate) => {
+    const onSubmit = (updateData: IUserProfileForm) => {
         const { name } = updateData;
         const validName = name.trim();
         if (validName !== user?.name) {

@@ -1,10 +1,11 @@
 import React from 'react';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 import { Paper, TextField, InputLabel } from "@mui/material";
 
 interface ITitleField {
-    register: any;
-    error: any;
+    register: UseFormRegister<any>;
+    error?: FieldError;
     value: string;
 }
 
@@ -16,8 +17,8 @@ const TitleField: React.FC<ITitleField> = ({ register, error, value }) => {
                 {...register("title", { required: true })}
                 multiline
                 maxRows={2}
-                helperText={error.title?.message}
-                error={error.title ? true : false}
+                helperText={error?.message}
+                error={error? true : false}
                 variant="standard"
                 placeholder="Add title..."
                 defaultValue={value}

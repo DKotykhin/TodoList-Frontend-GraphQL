@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller } from "react-hook-form";
+import { Control, Controller, FieldError } from "react-hook-form";
 
 import {
     Box,
@@ -13,8 +13,8 @@ import styles from './field.module.scss';
 
 interface IEmailField {
     disabled: boolean;
-    error: any;
-    control: any
+    error?: FieldError;
+    control: Control<any>;
 }
 
 const EmailField: React.FC<IEmailField> = ({ disabled, error, control }) => {

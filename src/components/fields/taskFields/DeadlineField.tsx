@@ -1,12 +1,13 @@
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 import { format } from "date-fns";
 
 import { Box, TextField, InputLabel } from "@mui/material";
 
 interface IDeadlineField {
-    register: any;
-    value: string | undefined;
+    register: UseFormRegister<any>;
+    value?: string;
 }
 
 const DeadlineField: React.FC<IDeadlineField> = ({ register, value }) => {

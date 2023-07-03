@@ -7,7 +7,7 @@ import { Box } from "@mui/system";
 import { Container, Typography } from "@mui/material";
 
 import { TitleField, MDEField, SubtitleField, DeadlineField } from "../fields/taskFields/_index";
-import { AddTaskFormValidation } from "../validations/taskFormValidation";
+import { AddTaskFormValidation } from "../../validations/taskFormValidation";
 import Buttons from "./buttons/Buttons";
 
 import { useMutation } from "@apollo/client";
@@ -68,7 +68,7 @@ const AddTaskComponent: React.FC = () => {
             <Typography className={styles.task__title}>Add Task</Typography>
             <Box onSubmit={handleSubmit(onSubmit)} component="form">
 
-                <TitleField register={register} error={errors} value={''} />
+                <TitleField register={register} error={errors.title} value={''} />
                 <SubtitleField register={register} value={''} />
                 <MDEField MDEChange={MDEChange} />
                 <DeadlineField register={register} value={''} />

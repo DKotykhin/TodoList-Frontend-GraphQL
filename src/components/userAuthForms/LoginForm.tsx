@@ -7,7 +7,7 @@ import { Button, Container, Typography, Box, Avatar, Paper } from "@mui/material
 import { InputLabel, Checkbox } from "@mui/material";
 
 import { EmailField, PasswordField } from "components/fields/userFields/_index";
-import { LoginFormValidation } from "../validations/userFormValidation";
+import { LoginFormValidation } from "../../validations/userFormValidation";
 
 import { useLazyQuery } from '@apollo/client';
 import { USER_LOGIN } from "apollo/query/getUser";

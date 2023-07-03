@@ -11,6 +11,11 @@ export interface IUserUpdate {
     [key: string]: string;
 }
 
+export interface IUserProfileForm {
+    email: string;
+    name: string;
+}
+
 export interface IUser {
     _id: string;
     email: string;

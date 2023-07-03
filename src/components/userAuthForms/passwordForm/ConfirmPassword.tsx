@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { PasswordField } from "components/fields/userFields/_index";
-import { PasswordFormValidation } from "../../validations/userFormValidation";
+import { PasswordFormValidation } from "../../../validations/userFormValidation";
 
 import { useMutation } from '@apollo/client';
 import { USER_CONFIRM_PASSWORD } from "apollo/mutation/mutateUser";

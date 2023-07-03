@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { Container, Typography, InputLabel, Checkbox } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { UpdateTaskFormValidation } from "../validations/taskFormValidation";
+import { UpdateTaskFormValidation } from "../../validations/taskFormValidation";
 import { TitleField, MDEField, SubtitleField, DeadlineField } from "../fields/taskFields/_index";
 import Buttons from "./buttons/Buttons";
 
@@ -99,7 +99,7 @@ const UpdateTaskComponent: React.FC = () => {
             {singleTask &&
                 <Box onSubmit={handleSubmit(onSubmit)} component="form">
 
-                    <TitleField register={register} error={errors} value={singleTask.title} />
+                    <TitleField register={register} error={errors.title} value={singleTask.title} />
                     <SubtitleField register={register} value={singleTask.subtitle} />
                     <MDEField MDEChange={MDEChange} description={singleTask.description} />
                     <DeadlineField register={register} value={format(new Date(singleTask.deadline || ""), "yyyy-LL-dd HH:mm")} />

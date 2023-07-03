@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { format } from 'date-fns';
+
 import { Box } from '@mui/system';
 import { Container, Typography } from "@mui/material";
 
@@ -10,7 +12,7 @@ const Footer: React.FC = () => {
         <Box className={styles.footer}>
             <Container maxWidth='xl' className={styles.footer__container}>
                 <Typography className={styles.footer__right}>
-                    &copy; All rights reserved
+                    &copy;{format(new Date(), 'yyyy')} &nbsp; All rights reserved
                 </Typography>
                 <Typography className={styles.footer__logo}>
                     TodoList

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { Button, Container, Typography, Box, Avatar, Paper } from "@mui/material";
 
 import { EmailField } from "components/fields/userFields/_index";
-import { ResetPasswordFormValidation } from 'components/validations/userFormValidation';
+import { ResetPasswordFormValidation } from 'validations/userFormValidation';
 
 import { useMutation } from '@apollo/client';
 import { USER_RESET_PASSWORD } from "apollo/mutation/mutateUser";
